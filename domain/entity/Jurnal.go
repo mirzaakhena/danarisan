@@ -8,7 +8,7 @@ import (
 
 type Jurnal struct {
 	BaseModel
-	ID         vo.JurnalID   //
+	ID         vo.JurnalID   `gorm:"primaryKey"` //
 	ArisanID   vo.ArisanID   //
 	PesertaID  vo.PesertaID  //
 	Tanggal    time.Time     //

@@ -7,6 +7,7 @@ import (
 
 // MulaiArisanOutport ...
 type MulaiArisanOutport interface {
+	repository.FindOnePesertaRepo
 	repository.FindOneArisanRepo
 	repository.FindAllSlotRepo
 	repository.FindOneUndianRepo

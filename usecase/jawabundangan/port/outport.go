@@ -11,5 +11,7 @@ type JawabUndanganOutport interface {
 	repository.FindOneArisanRepo
 	repository.SavePesertaRepo
 	repository.SaveArisanRepo
+	repository.SaveSlotRepo
 	service.TransactionDB
+	service.IDGenerator
 }

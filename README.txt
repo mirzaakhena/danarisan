@@ -151,7 +151,7 @@ Peserta buka aplikasi Arisan
 
 
 JawabUndangan ?
-  client akan panggil joinarisan/:arisanID/:pesertaID
+  client akan panggil joinarisan/:pesertaID
   table yg berpengaruh
     Peserta
       Status

@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/controller"
 	"github.com/mirzaakhena/danarisan/infrastructure/log"
 	"github.com/mirzaakhena/danarisan/infrastructure/util"
-	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/usecase/aplikasicontoh/port"
 )
 

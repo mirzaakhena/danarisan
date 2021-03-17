@@ -5,6 +5,7 @@ import (
 	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/usecase/registerpeserta/port"
+	"strings"
 )
 
 //go:generate mockery --dir port/ --name RegisterPesertaOutport -output mocks/
@@ -29,7 +30,7 @@ func (r *registerPesertaInteractor) Execute(ctx context.Context, req port.Regist
 
 		pesertaObj, err := entity.NewPeserta(entity.PesertaRequest{
 			GenerateID: func() string {
-				return req.PesertaID
+				return strings.ToLower(req.PesertaID)
 			},
 			Nama: req.PesertaID,
 		})
