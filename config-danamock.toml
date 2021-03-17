@@ -1,0 +1,10 @@
+[server]
+port = "8081"
+
+[logfile]
+path = "."
+name = "danamock"
+age = 14
+
+[database]
+connectionstring = "dana.db"

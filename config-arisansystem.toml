@@ -1,0 +1,10 @@
+[server]
+port = "8080"
+
+[logfile]
+path = "."
+name = "arisansystem"
+age = 14
+
+[database]
+connectionstring = "arisan.db"
