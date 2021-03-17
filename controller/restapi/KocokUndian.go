@@ -7,6 +7,7 @@ import (
 	"github.com/mirzaakhena/danarisan/infrastructure/util"
 	"github.com/mirzaakhena/danarisan/usecase/kocokundian/port"
 	"net/http"
+	"time"
 )
 
 // KocokUndianHandler ...
@@ -22,6 +23,8 @@ func KocokUndianHandler(inputPort port.KocokUndianInport) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
+
+		req.TanggalHariIni = time.Now()
 
 		log.InfoRequest(ctx, util.MustJSON(req))
 

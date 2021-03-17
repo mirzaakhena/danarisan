@@ -10,7 +10,7 @@ import (
 // KocokUndianOutport ...
 type KocokUndianOutport interface {
 	repository.FindOneArisanRepo
-	repository.FindOneUndianByIDRepo
+	repository.FindOneUndianRepo
 	repository.FindAllSlotNotWinYetRepo
 	repository.FindAllSlotRepo
 	repository.FindOnePesertaRepo

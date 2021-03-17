@@ -7,6 +7,7 @@ import (
 	"github.com/mirzaakhena/danarisan/infrastructure/util"
 	"github.com/mirzaakhena/danarisan/usecase/tagihsetoran/port"
 	"net/http"
+	"time"
 )
 
 // TagihSetoranHandler ...
@@ -22,6 +23,8 @@ func TagihSetoranHandler(inputPort port.TagihSetoranInport) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
+
+		req.HariIni = time.Now()
 
 		log.InfoRequest(ctx, util.MustJSON(req))
 

@@ -13,7 +13,7 @@ type TagihSetoranInport interface {
 // TagihSetoranRequest ...
 type TagihSetoranRequest struct {
 	ArisanID string
-	HariIni  time.Time
+	HariIni  time.Time `json:"-"`
 }
 
 // TagihSetoranResponse ...
