@@ -492,3 +492,53 @@ func (r *RepositoryImplementation) FindAllTagihanByArisanID(ctx context.Context,
 	return tagihanObjs, nil
 
 }
+
+func (r *RepositoryImplementation) FindAllJurnal(ctx context.Context, arisanID vo.ArisanID) ([]entity.Jurnal, error) {
+
+	log.InfoRequest(ctx, util.MustJSON(map[string]interface{}{"arisanID": arisanID}))
+
+	db, err := extractDB(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var jurnalObjs []entity.Jurnal
+	err = db.
+		Where("arisan_id = ?", arisanID).
+		Find(&jurnalObjs).Error
+
+	if err != nil {
+		log.ErrorResponse(ctx, err)
+		return nil, err
+	}
+
+	log.InfoResponse(ctx, util.MustJSON(jurnalObjs))
+
+	return jurnalObjs, nil
+
+}
+
+func (r *RepositoryImplementation) FindAllSaldoAkun(ctx context.Context, arisanID vo.ArisanID) ([]entity.SaldoAkun, error) {
+
+	log.InfoRequest(ctx, util.MustJSON(map[string]interface{}{"arisanID": arisanID}))
+
+	db, err := extractDB(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var saldoAkunObjs []entity.SaldoAkun
+	err = db.
+		Where("arisan_id = ?", arisanID).
+		Find(&saldoAkunObjs).Error
+
+	if err != nil {
+		log.ErrorResponse(ctx, err)
+		return nil, err
+	}
+
+	log.InfoResponse(ctx, util.MustJSON(saldoAkunObjs))
+
+	return saldoAkunObjs, nil
+
+}

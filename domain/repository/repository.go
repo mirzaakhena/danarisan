@@ -91,3 +91,11 @@ type FindAllPesertaRepo interface {
 type FindAllUndianRepo interface {
 	FindAllUndian(ctx context.Context, arisanID vo.ArisanID) ([]entity.Undian, error)
 }
+
+type FindAllSaldoAkunRepo interface {
+	FindAllSaldoAkun(ctx context.Context, arisanID vo.ArisanID) ([]entity.SaldoAkun, error)
+}
+
+type FindAllJurnalRepo interface {
+	FindAllJurnal(ctx context.Context, arisanID vo.ArisanID) ([]entity.Jurnal, error)
+}

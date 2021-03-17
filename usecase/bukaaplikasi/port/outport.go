@@ -13,5 +13,7 @@ type BukaAplikasiOutport interface {
 	repository.FindAllSlotRepo
 	repository.FindAllUndianRepo
 	repository.FindAllTagihanByArisanIDRepo
+	repository.FindAllJurnalRepo
+	repository.FindAllSaldoAkunRepo
 	service.ReadOnlyDB
 }
