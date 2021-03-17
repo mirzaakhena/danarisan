@@ -77,6 +77,20 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 
 		arisanObj.ListTagihan = listTagihan
 
+		listJurnal, err := r.outport.FindAllJurnal(ctx, arisanObj.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		arisanObj.ListJurnal = listJurnal
+
+		listSaldoAkun, err := r.outport.FindAllSaldoAkun(ctx, arisanObj.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		arisanObj.ListSaldoAkun = listSaldoAkun
+
 		//if pesertaObj.StateUndangan == vo.DitawarkanUndanganStateEnum {
 		//	arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
 		//	if err != nil {

@@ -318,3 +318,4 @@ Piutang -, CREDIT, 0, 0
 
 
 
+nohup ./danarisan > myoutput.txt >2&1 &
