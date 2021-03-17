@@ -16,5 +16,4 @@ type BukaAplikasiRequest struct {
 
 // BukaAplikasiResponse ...
 type BukaAplikasiResponse struct {
-
 }

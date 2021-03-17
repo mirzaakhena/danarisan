@@ -2,6 +2,7 @@ package tagihsetoran
 
 import (
 	"context"
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/domain/vo"
 	"github.com/mirzaakhena/danarisan/usecase/tagihsetoran/port"
@@ -32,9 +33,17 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 			return err
 		}
 
+		if arisanObj == nil {
+			return apperror.ArisanTidakDitemukan
+		}
+
 		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID, arisanObj.PutaranKe)
 		if err != nil {
 			return err
+		}
+
+		if undianObj == nil {
+			return apperror.UndianTidakDitemukan
 		}
 
 		tagihanObjs, err := r.outport.FindAllTagihan(ctx, undianObj.ID)
@@ -54,24 +63,28 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 				Tagihan:            tagihanObj,
 			}
 
-			go func(innerReq port.CreatePaymentRequest) {
+			createPaymentRes, err := r.outport.CreatePayment(ctx, createPaymentReq)
+			if err != nil {
+				// TODO jika gagal ada harus mekanisme retry disini
+				return err
+			}
 
-				createPaymentRes, err := r.outport.CreatePayment(ctx, innerReq)
-				if err != nil {
-					// TODO jika gagal ada harus mekanisme retry disini
-					return
-				}
+			tagihanObj2 := createPaymentReq.Tagihan
 
-				tagihanObj2 := innerReq.Tagihan
+			err = tagihanObj2.SimpanPenagihan(createPaymentRes.AcquirementID, createPaymentRes.CheckoutURL)
+			if err != nil {
+				return err
+			}
 
-				_ = tagihanObj2.SimpanPenagihan(createPaymentRes.AcquirementID, createPaymentRes.CheckoutURL)
+			_, err = r.outport.SaveTagihan(ctx, &tagihanObj2)
+			if err != nil {
+				return err
+			}
 
-				_, _ = r.outport.SaveTagihan(ctx, &tagihanObj2)
-
-				r.outport.NotifyPeserta(ctx, port.NotifyPesertaRequest{PesertaID: string(tagihanObj.PesertaID)})
-
-			}(createPaymentReq)
-
+			_, err = r.outport.NotifyPeserta(ctx, port.NotifyPesertaRequest{PesertaID: string(tagihanObj.PesertaID)})
+			if err != nil {
+				return err
+			}
 		}
 
 		return nil

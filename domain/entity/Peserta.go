@@ -11,11 +11,12 @@ type Peserta struct {
 	TidakMembayar   int              //
 	ArisanYgDiikuti vo.ArisanID      //
 	StateUndangan   vo.UndanganState //
+	IsAdmin         bool             //
 }
 
 type PesertaRequest struct {
-	GenerateID   func() string //
-	Nama         string        //
+	GenerateID func() string //
+	Nama       string        //
 }
 
 func NewPeserta(req PesertaRequest) (*Peserta, error) {
@@ -32,8 +33,17 @@ func NewPeserta(req PesertaRequest) (*Peserta, error) {
 	obj.Nama = req.Nama
 	obj.Membayar = 0
 	obj.TidakMembayar = 0
+	obj.StateUndangan = vo.NganggurUndanganStateEnum
+	obj.IsAdmin = false
+	obj.ArisanYgDiikuti = ""
 
 	return &obj, nil
+}
+
+func (r *Peserta) JadiAdmin(arisanID vo.ArisanID) {
+	r.IsAdmin = true
+	r.ArisanYgDiikuti = arisanID
+	r.StateUndangan = vo.TerimaUndanganStateEnum
 }
 
 func (r *Peserta) MelakukanPembayaran() {
@@ -42,4 +52,9 @@ func (r *Peserta) MelakukanPembayaran() {
 
 func (r *Peserta) TidakMelakukanPembayaran() {
 	r.TidakMembayar++
+}
+
+func (r *Peserta) DitawarkanIkutArisan(arisanID vo.ArisanID) {
+	r.StateUndangan = vo.DitawarkanUndanganStateEnum
+	r.ArisanYgDiikuti = arisanID
 }

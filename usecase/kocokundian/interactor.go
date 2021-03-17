@@ -35,7 +35,15 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return err
 		}
 
+		if undianObj == nil {
+			return apperror.UndianTidakDitemukan
+		}
+
 		arisanObj, err := r.outport.FindOneArisan(ctx, undianObj.ArisanID)
+
+		if arisanObj == nil {
+			return apperror.ArisanTidakDitemukan
+		}
 
 		slotsObj, err := r.outport.FindAllSlotNotWinYet(ctx, arisanObj.ID)
 		if err != nil {
@@ -63,10 +71,14 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return err
 		}
 
+		if pesertaObj == nil {
+			return apperror.PesertaTidakDitemukan
+		}
+
 		totalNilaiUndian := arisanObj.GetTotalNilaiUndian()
 
 		_, err = r.outport.TopupPeserta(ctx, port.TopupPesertaRequest{
-			PhoneNumber: pesertaObj.NomorTelepon,
+			PesertaID: string(pesertaObj.ID),
 			TotalTopup:  totalNilaiUndian,
 		})
 		if err != nil {

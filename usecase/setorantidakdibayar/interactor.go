@@ -2,6 +2,7 @@ package setorantidakdibayar
 
 import (
 	"context"
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/domain/vo"
 
@@ -33,6 +34,10 @@ func (r *setoranTidakDibayarInteractor) Execute(ctx context.Context, req port.Se
 			return err
 		}
 
+		if tagihanObj == nil {
+			return apperror.TagihanTidakDitemukan
+		}
+
 		tagihanObj.TidakDiBayar()
 
 		_, err = r.outport.SaveTagihan(ctx, tagihanObj)
@@ -43,6 +48,10 @@ func (r *setoranTidakDibayarInteractor) Execute(ctx context.Context, req port.Se
 		pesertaObj, err := r.outport.FindOnePeserta(ctx, tagihanObj.PesertaID)
 		if err != nil {
 			return err
+		}
+
+		if pesertaObj == nil {
+			return apperror.PesertaTidakDitemukan
 		}
 
 		pesertaObj.TidakMelakukanPembayaran()

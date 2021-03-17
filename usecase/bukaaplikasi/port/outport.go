@@ -8,6 +8,6 @@ import (
 // BukaAplikasiOutport ...
 type BukaAplikasiOutport interface {
 	repository.FindOnePesertaRepo
-	service.TransactionDB
+	repository.FindOneArisanRepo
+	service.ReadOnlyDB
 }
-

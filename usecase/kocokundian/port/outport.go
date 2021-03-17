@@ -39,8 +39,8 @@ type GetRandomNumberResponse struct {
 
 // TopupPesertaRequest ...
 type TopupPesertaRequest struct {
-	PhoneNumber string
-	TotalTopup  float64
+	PesertaID  string
+	TotalTopup float64
 }
 
 // TopupPesertaResponse ...

@@ -2,6 +2,7 @@ package bayarsetoran
 
 import (
 	"context"
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/domain/vo"
@@ -33,6 +34,10 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 			return err
 		}
 
+		if tagihanObj == nil {
+			return apperror.TagihanTidakDitemukan
+		}
+
 		tagihanObj.Bayar(req.TanggalHariIni)
 
 		_, err = r.outport.SaveTagihan(ctx, tagihanObj)
@@ -43,6 +48,10 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 		pesertaObj, err := r.outport.FindOnePeserta(ctx, tagihanObj.PesertaID)
 		if err != nil {
 			return err
+		}
+
+		if pesertaObj == nil {
+			return apperror.PesertaTidakDitemukan
 		}
 
 		pesertaObj.MelakukanPembayaran()

@@ -1,10 +1,15 @@
 package port
 
 import (
-	"context"
+	"github.com/mirzaakhena/danarisan/domain/repository"
+	"github.com/mirzaakhena/danarisan/domain/service"
 )
 
 // UndangPesertaOutport ...
 type UndangPesertaOutport interface {
-	UndangPeserta(ctx context.Context, req UndangPesertaRequest) (*UndangPesertaResponse, error)
+	repository.FindOneArisanRepo
+	repository.FindOnePesertaRepo
+	repository.FindOneArisanByAdminIDRepo
+	repository.SavePesertaRepo
+	service.TransactionDB
 }

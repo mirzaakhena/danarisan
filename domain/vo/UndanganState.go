@@ -9,12 +9,14 @@ import (
 type UndanganState string
 
 const (
+	NganggurUndanganStateEnum   UndanganState = "NGANGGUR"
 	DitawarkanUndanganStateEnum UndanganState = "DITAWARKAN"
 	TerimaUndanganStateEnum     UndanganState = "TERIMA"
 	TolakUndanganStateEnum      UndanganState = "TOLAK"
 )
 
 var enumUndanganState = map[UndanganState]UndanganStateDetail{
+	NganggurUndanganStateEnum:   {},
 	DitawarkanUndanganStateEnum: {},
 	TerimaUndanganStateEnum:     {},
 	TolakUndanganStateEnum:      {},

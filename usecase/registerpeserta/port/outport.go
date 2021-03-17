@@ -10,4 +10,3 @@ type RegisterPesertaOutport interface {
 	repository.SavePesertaRepo
 	service.TransactionDB
 }
-

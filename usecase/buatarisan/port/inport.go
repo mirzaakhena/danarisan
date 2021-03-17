@@ -11,7 +11,7 @@ type BuatArisanInport interface {
 
 // BuatArisanRequest ...
 type BuatArisanRequest struct {
-	AdminID         string  //
+	PesertaID       string  //
 	NamaAdmin       string  //
 	NamaArisan      string  //
 	SetoranTiapSlot float64 //

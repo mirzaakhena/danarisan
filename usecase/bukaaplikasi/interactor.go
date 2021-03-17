@@ -2,7 +2,9 @@ package bukaaplikasi
 
 import (
 	"context"
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/service"
+	"github.com/mirzaakhena/danarisan/domain/vo"
 
 	"github.com/mirzaakhena/danarisan/usecase/bukaaplikasi/port"
 )
@@ -23,20 +25,69 @@ func NewBukaAplikasiUsecase(outputPort port.BukaAplikasiOutport) port.BukaAplika
 // Execute ...
 func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplikasiRequest) (*port.BukaAplikasiResponse, error) {
 
-    res := &port.BukaAplikasiResponse{}
+	res := &port.BukaAplikasiResponse{}
 
-	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
+	data, err := service.ReadOnly(ctx, r.outport, func(ctx context.Context) (interface{}, error) {
 
-		_, err := r.outport.FindOnePeserta(ctx, )
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
 		if err != nil {
 			return nil, err
 		}
 
-		return nil
+		if pesertaObj == nil {
+			return nil, apperror.PesertaTidakDitemukan
+		}
+
+		if pesertaObj.StateUndangan == vo.TolakUndanganStateEnum {
+
+			// peserta tidak join arisan dan bisa bikin arisan sendiri
+			return nil, nil
+		}
+
+		if pesertaObj.StateUndangan == vo.DitawarkanUndanganStateEnum {
+			arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanYgDiikuti)
+			if err != nil {
+				return nil, err
+			}
+
+			_ = arisanObj
+
+			// peserta belum join arisan dan arisan belum dimulai
+			// TODO return list of all peserta with their status and arisanID and state
+			return nil, nil
+		}
+
+		if pesertaObj.StateUndangan == vo.TerimaUndanganStateEnum {
+			arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanYgDiikuti)
+			if err != nil {
+				return nil, err
+			}
+
+			if arisanObj.SudahSelesai() {
+
+				// arisan sudah selesai
+				return nil, apperror.ArisanSudahSelesai
+			}
+
+			if arisanObj.MasihTerimaPeserta() {
+
+				// peserta join arisan tapi arisan belum dimulai
+				// TODO return list of all peserta with their status and arisanID and state
+				return nil, nil
+			}
+
+			// peserta join arisan dan arisan sudah dimulai
+			// TODO return list of all peserta with their status and arisanID and state
+			return nil, nil
+		}
+
+		return nil, nil
 	})
 	if err != nil {
 		return nil, err
 	}
+
+	_ = data
 
 	return res, nil
 }

@@ -75,3 +75,7 @@ type FindAllSlotNotWinYetRepo interface {
 type FindLastSaldoAkunRepo interface {
 	FindLastSaldoAkun(ctx context.Context, arisanID vo.ArisanID, pesertaID vo.PesertaID, akunType vo.AkunType) (*entity.SaldoAkun, error)
 }
+
+type FindOneArisanByAdminIDRepo interface {
+	FindOneArisanByAdminID(ctx context.Context, adminID vo.PesertaID) (*entity.Arisan, error)
+}

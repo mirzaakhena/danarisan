@@ -56,9 +56,12 @@ func NewSaldoAkun(req SaldoAkunRequest) (*SaldoAkun, error) {
 
 	}
 
+	lastSaldoAkunBalance := 0.0
 	if req.SaldoAkunSebelumnya != nil {
-		obj.Balance = req.SaldoAkunSebelumnya.Balance + obj.Amount
+		lastSaldoAkunBalance = req.SaldoAkunSebelumnya.Balance
 	}
+
+	obj.Balance = lastSaldoAkunBalance + obj.Amount
 
 	return &obj, nil
 }

@@ -22,12 +22,14 @@ type Arisan struct {
 	TotalPutaran             int             //
 	PutaranKe                int             //
 	JumlahPeserta            int             //
+	AdminID                  vo.PesertaID    //
 }
 
 type ArisanRequest struct {
 	GenerateID      service.IDGenerator //
 	Nama            string              //
 	SetoranTiapSlot float64             //
+	AdminID         vo.PesertaID        //
 }
 
 func NewArisan(req ArisanRequest) (obj *Arisan, err error) {
@@ -52,6 +54,7 @@ func NewArisan(req ArisanRequest) (obj *Arisan, err error) {
 	obj.PutaranKe = 0
 	obj.ArisanType = vo.SingleSlotArisanTypeEnum
 	obj.JumlahPeserta = 0
+	obj.AdminID = req.AdminID
 
 	return obj, nil
 }
@@ -90,4 +93,12 @@ func (r *Arisan) SiapkanArisanBerikutnya() {
 
 func (r *Arisan) SudahSelesai() bool {
 	return r.Status == vo.SelesaiArisanStatusEnum
+}
+
+func (r *Arisan) MasihTerimaPeserta() bool {
+	return r.Status == vo.TerimaPesertaArisanStatusEnum
+}
+
+func (r *Arisan) TambahPeserta() {
+	r.JumlahPeserta++
 }

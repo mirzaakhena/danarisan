@@ -11,6 +11,9 @@ type UndangPesertaInport interface {
 
 // UndangPesertaRequest ...
 type UndangPesertaRequest struct {
+	AdminID               string
+	ArisanID              string
+	PesertaYangDiundangID string
 }
 
 // UndangPesertaResponse ...

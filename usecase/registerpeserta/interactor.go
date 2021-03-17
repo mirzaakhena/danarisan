@@ -3,7 +3,7 @@ package registerpeserta
 import (
 	"context"
 	"github.com/mirzaakhena/danarisan/domain/entity"
-
+	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/usecase/registerpeserta/port"
 )
 
@@ -25,19 +25,25 @@ func (r *registerPesertaInteractor) Execute(ctx context.Context, req port.Regist
 
 	res := &port.RegisterPesertaResponse{}
 
+	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
+		pesertaObj, err := entity.NewPeserta(entity.PesertaRequest{
+			GenerateID: func() string {
+				return req.PesertaID
+			},
+			Nama: req.PesertaID,
+		})
+		if err != nil {
+			return err
+		}
 
-	pesertaObj, err := entity.NewPeserta(entity.PesertaRequest{
-		GenerateID: func() string {
-			return req.PesertaID
-		},
-		Nama: req.PesertaID,
+		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		if err != nil {
+			return err
+		}
+
+		return nil
 	})
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = r.outport.SavePeserta(ctx, pesertaObj)
 	if err != nil {
 		return nil, err
 	}

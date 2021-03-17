@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
+	"github.com/mirzaakhena/danarisan/domain/vo"
 	"github.com/mirzaakhena/danarisan/usecase/buatarisan/port"
 )
 
@@ -31,6 +32,7 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 			GenerateID:      r.outport,
 			Nama:            req.NamaArisan,
 			SetoranTiapSlot: req.SetoranTiapSlot,
+			AdminID:         vo.PesertaID(req.PesertaID),
 		})
 		if err != nil {
 			return err
@@ -41,13 +43,12 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 			return err
 		}
 
-		pesertaObj, err := entity.NewPeserta(entity.PesertaRequest{
-			GenerateID: r.outport,
-			Nama:       req.NamaAdmin,
-		})
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
 		if err != nil {
 			return err
 		}
+
+		pesertaObj.JadiAdmin(arisanObj.ID)
 
 		_, err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {

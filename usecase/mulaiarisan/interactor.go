@@ -2,6 +2,7 @@ package mulaiarisan
 
 import (
 	"context"
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/domain/vo"
@@ -34,6 +35,10 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 			return err
 		}
 
+		if arisanObj == nil {
+			return apperror.ArisanTidakDitemukan
+		}
+
 		err = arisanObj.Mulai()
 		if err != nil {
 			return err
@@ -47,6 +52,10 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID, arisanObj.PutaranKe)
 		if err != nil {
 			return err
+		}
+
+		if undianObj == nil {
+			return apperror.UndianTidakDitemukan
 		}
 
 		slots, err := r.outport.FindAllSlot(ctx, arisanObj.ID)

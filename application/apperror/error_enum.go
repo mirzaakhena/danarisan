@@ -9,5 +9,11 @@ const (
 	PesertaArisanMasihKurang       ErrorType = "ER1000 peserta arisan masih kurang"
 	NominalHarusLebihBesarDariNol  ErrorType = "ER1000 nominal tidak boleh nol"
 	SemuaPesertaSudahMenang        ErrorType = "ER1000 semua peserta sudah menang"
-	ArisanSudahBerakhir            ErrorType = "ER1000 arisan sudah selesai"
+	PesertaSudahJoinUndangan       ErrorType = "ER1000 peserta sudah join undangan"
+	PesertaSudahMenolakUndangan    ErrorType = "ER1000 peserta sudah menolak undangan"
+	PesertaSudahDiundang           ErrorType = "ER1000 peserta sudah diundang"
+	ArisanTidakDitemukan           ErrorType = "ER1000 arisan tidak ditemukan"
+	PesertaTidakDitemukan          ErrorType = "ER1000 peserta tidak ditemukan"
+	TagihanTidakDitemukan          ErrorType = "ER1000 tagihan tidak ditemukan"
+	UndianTidakDitemukan           ErrorType = "ER1000 undian tidak ditemukan"
 )

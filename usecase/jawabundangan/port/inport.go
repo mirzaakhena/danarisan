@@ -10,9 +10,11 @@ type JawabUndanganInport interface {
 }
 
 // JawabUndanganRequest ...
-type JawabUndanganRequest struct { 
+type JawabUndanganRequest struct {
+	PesertaID string //
+	Jawaban   string //
 }
 
 // JawabUndanganResponse ...
-type JawabUndanganResponse struct { 
+type JawabUndanganResponse struct {
 }

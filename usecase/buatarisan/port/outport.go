@@ -9,6 +9,7 @@ import (
 type BuatArisanOutport interface {
 	service.TransactionDB
 	service.IDGenerator
+	repository.FindOnePesertaRepo
 	repository.SaveArisanRepo
 	repository.SavePesertaRepo
 	repository.SaveSlotRepo
