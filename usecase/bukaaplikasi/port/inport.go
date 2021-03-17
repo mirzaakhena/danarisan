@@ -16,4 +16,5 @@ type BukaAplikasiRequest struct {
 
 // BukaAplikasiResponse ...
 type BukaAplikasiResponse struct {
+	Data interface{}
 }

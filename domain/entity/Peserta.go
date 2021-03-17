@@ -6,13 +6,13 @@ import (
 
 type Peserta struct {
 	BaseModel
-	ID              vo.PesertaID     `gorm:"primaryKey"` //
-	Nama            string           //
-	Membayar        int              //
-	TidakMembayar   int              //
-	ArisanYgDiikuti vo.ArisanID      //
-	StateUndangan   vo.UndanganState //
-	IsAdmin         bool             //
+	ID            vo.PesertaID     `gorm:"primaryKey"` //
+	Nama          string           //
+	Membayar      int              //
+	TidakMembayar int              //
+	ArisanID      vo.ArisanID      //
+	StateUndangan vo.UndanganState //
+	IsAdmin       bool             //
 }
 
 type PesertaRequest struct {
@@ -36,14 +36,14 @@ func NewPeserta(req PesertaRequest) (*Peserta, error) {
 	obj.TidakMembayar = 0
 	obj.StateUndangan = vo.NganggurUndanganStateEnum
 	obj.IsAdmin = false
-	obj.ArisanYgDiikuti = ""
+	obj.ArisanID = ""
 
 	return &obj, nil
 }
 
 func (r *Peserta) JadiAdmin(arisanID vo.ArisanID) {
 	r.IsAdmin = true
-	r.ArisanYgDiikuti = arisanID
+	r.ArisanID = arisanID
 	r.StateUndangan = vo.TerimaUndanganStateEnum
 }
 
@@ -57,11 +57,11 @@ func (r *Peserta) TidakMelakukanPembayaran() {
 
 func (r *Peserta) DitawarkanIkutArisan(arisanID vo.ArisanID) {
 	r.StateUndangan = vo.DitawarkanUndanganStateEnum
-	r.ArisanYgDiikuti = arisanID
+	r.ArisanID = arisanID
 }
 
 func (r *Peserta) ResetPeserta() {
 	r.IsAdmin = false
 	r.StateUndangan = vo.NganggurUndanganStateEnum
-	r.ArisanYgDiikuti = ""
+	r.ArisanID = ""
 }

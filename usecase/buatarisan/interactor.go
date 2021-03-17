@@ -38,7 +38,7 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 			return apperror.PesertaTidakDitemukan
 		}
 
-		if pesertaObj.IsAdmin && pesertaObj.ArisanYgDiikuti != "" {
+		if pesertaObj.IsAdmin && pesertaObj.ArisanID != "" {
 			return apperror.PesertaSudahMenjadiAdmin
 		}
 
@@ -52,14 +52,16 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 			return err
 		}
 
-		_, err = r.outport.SaveArisan(ctx, arisanObj)
-		if err != nil {
-			return err
-		}
+		arisanObj.TambahPeserta()
 
 		pesertaObj.JadiAdmin(arisanObj.ID)
 
 		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		if err != nil {
+			return err
+		}
+
+		_, err = r.outport.SaveArisan(ctx, arisanObj)
 		if err != nil {
 			return err
 		}

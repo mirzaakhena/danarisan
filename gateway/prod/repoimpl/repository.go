@@ -381,7 +381,7 @@ func (r *RepositoryImplementation) FindAllSlotNotWinYet(ctx context.Context, ari
 	var slotObjs []entity.Slot
 	err = db.
 		Where("arisan_id = ? AND tanggal_menang IS NULL", arisanID).
-		First(&slotObjs).Error
+		Find(&slotObjs).Error
 
 	if err != nil {
 		log.ErrorResponse(ctx, err)
@@ -415,5 +415,80 @@ func (r *RepositoryImplementation) FindLastSaldoAkun(ctx context.Context, arisan
 	log.InfoResponse(ctx, util.MustJSON(saldoAkunObj))
 
 	return &saldoAkunObj, nil
+
+}
+
+func (r *RepositoryImplementation) FindAllPeserta(ctx context.Context, arisanID vo.ArisanID) ([]entity.Peserta, error) {
+
+	log.InfoRequest(ctx, util.MustJSON(map[string]interface{}{"arisanID": arisanID}))
+
+	db, err := extractDB(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var pesertaObjs []entity.Peserta
+	err = db.
+		Where("arisan_id = ?", arisanID).
+		Find(&pesertaObjs).Error
+
+	if err != nil {
+		log.ErrorResponse(ctx, err)
+		return nil, err
+	}
+
+	log.InfoResponse(ctx, util.MustJSON(pesertaObjs))
+
+	return pesertaObjs, nil
+
+}
+
+func (r *RepositoryImplementation) FindAllUndian(ctx context.Context, arisanID vo.ArisanID) ([]entity.Undian, error) {
+
+	log.InfoRequest(ctx, util.MustJSON(map[string]interface{}{"arisanID": arisanID}))
+
+	db, err := extractDB(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var undianObjs []entity.Undian
+	err = db.
+		Where("arisan_id = ?", arisanID).
+		Find(&undianObjs).Error
+
+	if err != nil {
+		log.ErrorResponse(ctx, err)
+		return nil, err
+	}
+
+	log.InfoResponse(ctx, util.MustJSON(undianObjs))
+
+	return undianObjs, nil
+
+}
+
+func (r *RepositoryImplementation) FindAllTagihanByArisanID(ctx context.Context, arisanID vo.ArisanID) ([]entity.Tagihan, error) {
+
+	log.InfoRequest(ctx, util.MustJSON(map[string]interface{}{"arisanID": arisanID}))
+
+	db, err := extractDB(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var tagihanObjs []entity.Tagihan
+	err = db.
+		Where("arisan_id = ?", arisanID).
+		Find(&tagihanObjs).Error
+
+	if err != nil {
+		log.ErrorResponse(ctx, err)
+		return nil, err
+	}
+
+	log.InfoResponse(ctx, util.MustJSON(tagihanObjs))
+
+	return tagihanObjs, nil
 
 }

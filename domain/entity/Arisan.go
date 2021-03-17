@@ -15,15 +15,20 @@ type Arisan struct {
 	ID                       vo.ArisanID     `gorm:"primaryKey"` //
 	Nama                     string          //
 	Status                   vo.ArisanStatus //
-	ArisanType               vo.ArisanType   //
+	ArisanType               vo.ArisanType   `json:"-"`//
 	SetoranTiapSlot          float64         //
-	JumlahGroup              int             //
-	JumlahSlotTiapGroup      int             //
-	JumlahMaxSlotTiapPeserta int             //
+	JumlahGroup              int             `json:"-"`//
+	JumlahSlotTiapGroup      int             `json:"-"`//
+	JumlahMaxSlotTiapPeserta int             `json:"-"`//
 	TotalPutaran             int             //
 	PutaranKe                int             //
 	JumlahPeserta            int             //
 	AdminID                  vo.PesertaID    //
+
+	ListPeserta []Peserta `gorm:"-"` //
+	ListSlot    []Slot    `gorm:"-"` //
+	ListUndian  []Undian  `gorm:"-"` //
+	ListTagihan []Tagihan `gorm:"-"` //
 }
 
 type ArisanRequest struct {
