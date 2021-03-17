@@ -14,8 +14,8 @@ type tagihSetoranInteractor struct {
 	outport port.TagihSetoranOutport
 }
 
-// NewTagihSetoranUsecase ...
-func NewTagihSetoranUsecase(outputPort port.TagihSetoranOutport) port.TagihSetoranInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.TagihSetoranOutport) port.TagihSetoranInport {
 	return &tagihSetoranInteractor{
 		outport: outputPort,
 	}

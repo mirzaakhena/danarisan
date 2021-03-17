@@ -15,8 +15,8 @@ type bayarSetoranInteractor struct {
 	outport port.BayarSetoranOutport
 }
 
-// NewBayarSetoranUsecase ...
-func NewBayarSetoranUsecase(outputPort port.BayarSetoranOutport) port.BayarSetoranInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.BayarSetoranOutport) port.BayarSetoranInport {
 	return &bayarSetoranInteractor{
 		outport: outputPort,
 	}

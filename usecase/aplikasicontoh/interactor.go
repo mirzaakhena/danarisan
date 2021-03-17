@@ -12,8 +12,8 @@ type aplikasiContohInteractor struct {
 	outport port.AplikasiContohOutport
 }
 
-// NewAplikasiContohUsecase ...
-func NewAplikasiContohUsecase(outputPort port.AplikasiContohOutport) port.AplikasiContohInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.AplikasiContohOutport) port.AplikasiContohInport {
 	return &aplikasiContohInteractor{
 		outport: outputPort,
 	}

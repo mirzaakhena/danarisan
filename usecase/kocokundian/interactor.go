@@ -16,8 +16,8 @@ type kocokUndianInteractor struct {
 	outport port.KocokUndianOutport
 }
 
-// NewKocokUndianUsecase ...
-func NewKocokUndianUsecase(outputPort port.KocokUndianOutport) port.KocokUndianInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.KocokUndianOutport) port.KocokUndianInport {
 	return &kocokUndianInteractor{
 		outport: outputPort,
 	}

@@ -16,8 +16,8 @@ type mulaiArisanInteractor struct {
 	outport port.MulaiArisanOutport
 }
 
-// NewMulaiArisanUsecase ...
-func NewMulaiArisanUsecase(outputPort port.MulaiArisanOutport) port.MulaiArisanInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.MulaiArisanOutport) port.MulaiArisanInport {
 	return &mulaiArisanInteractor{
 		outport: outputPort,
 	}

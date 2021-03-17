@@ -15,8 +15,8 @@ type bukaAplikasiInteractor struct {
 	outport port.BukaAplikasiOutport
 }
 
-// NewBukaAplikasiUsecase ...
-func NewBukaAplikasiUsecase(outputPort port.BukaAplikasiOutport) port.BukaAplikasiInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.BukaAplikasiOutport) port.BukaAplikasiInport {
 	return &bukaAplikasiInteractor{
 		outport: outputPort,
 	}

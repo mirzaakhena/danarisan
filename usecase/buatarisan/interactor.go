@@ -15,8 +15,8 @@ type buatArisanInteractor struct {
 	outport port.BuatArisanOutport
 }
 
-// NewBuatArisanUsecase ...
-func NewBuatArisanUsecase(outputPort port.BuatArisanOutport) port.BuatArisanInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.BuatArisanOutport) port.BuatArisanInport {
 	return &buatArisanInteractor{
 		outport: outputPort,
 	}

@@ -26,13 +26,13 @@ type DatabaseImpl struct {
 
 // GetDatabase put the database object into context.
 // From client view, it will return the context to user
-func (r *DatabaseImpl) GetDatabase(ctx context.Context) context.Context {
+func (r *DatabaseImpl) GetDatabase(ctx context.Context) (context.Context, error) {
 	log.InfoRequest(ctx, "GetDB")
 
 	trxCtx := context.WithValue(ctx, ContextDBValue, r.db)
 
 	log.InfoResponse(ctx, "GetDB")
-	return trxCtx
+	return trxCtx, nil
 }
 
 // extractDB is used by other repo to extract the database from context

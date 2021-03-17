@@ -15,8 +15,8 @@ type setoranTidakDibayarInteractor struct {
 	outport port.SetoranTidakDibayarOutport
 }
 
-// NewSetoranTidakDibayarUsecase ...
-func NewSetoranTidakDibayarUsecase(outputPort port.SetoranTidakDibayarOutport) port.SetoranTidakDibayarInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.SetoranTidakDibayarOutport) port.SetoranTidakDibayarInport {
 	return &setoranTidakDibayarInteractor{
 		outport: outputPort,
 	}
