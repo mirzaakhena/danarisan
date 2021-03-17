@@ -1,6 +1,8 @@
 API ARISAN
 -----------
 
+GET /arisan/:pesertaID
+
 
 POST /registerpeserta
 {
@@ -40,7 +42,7 @@ POST /mulaiarisan
 
 POST /kocokundian
 {
-    "UndianID": ""
+    "PesertaID": ""
 }
 
 
