@@ -1,1 +1,4 @@
 .idea/
+default.log
+logs/
+test.db

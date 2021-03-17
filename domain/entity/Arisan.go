@@ -11,6 +11,7 @@ const (
 )
 
 type Arisan struct {
+	BaseModel
 	ID                       vo.ArisanID     //
 	Nama                     string          //
 	Status                   vo.ArisanStatus //
@@ -85,10 +86,12 @@ func (r *Arisan) GetTotalNilaiUndian() float64 {
 }
 
 func (r *Arisan) SiapkanArisanBerikutnya() {
-	r.PutaranKe = r.PutaranKe + 1
-	if r.PutaranKe > r.TotalPutaran {
+	nextPutaran := r.PutaranKe + 1
+	if nextPutaran > r.TotalPutaran {
 		r.Status = vo.SelesaiArisanStatusEnum
+		return
 	}
+	r.PutaranKe = nextPutaran
 }
 
 func (r *Arisan) SudahSelesai() bool {

@@ -15,8 +15,8 @@ type bukaAplikasiInteractor struct {
 	outport port.BukaAplikasiOutport
 }
 
-// NewBukaAplikasiUsecase ...
-func NewBukaAplikasiUsecase(outputPort port.BukaAplikasiOutport) port.BukaAplikasiInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.BukaAplikasiOutport) port.BukaAplikasiInport {
 	return &bukaAplikasiInteractor{
 		outport: outputPort,
 	}
@@ -50,7 +50,9 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 				return nil, err
 			}
 
-			_ = arisanObj
+			if arisanObj == nil {
+				return nil, apperror.ArisanTidakDitemukan
+			}
 
 			// peserta belum join arisan dan arisan belum dimulai
 			// TODO return list of all peserta with their status and arisanID and state
@@ -61,6 +63,10 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 			arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanYgDiikuti)
 			if err != nil {
 				return nil, err
+			}
+
+			if arisanObj == nil {
+				return nil, apperror.ArisanTidakDitemukan
 			}
 
 			if arisanObj.SudahSelesai() {

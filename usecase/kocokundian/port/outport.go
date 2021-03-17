@@ -21,6 +21,7 @@ type KocokUndianOutport interface {
 	repository.SaveTagihanRepo
 	repository.SaveJurnalRepo
 	repository.SaveSaldoAkunRepo
+	repository.SavePesertaRepo
 	service.TransactionDB
 	service.IDGenerator
 	GetRandomNumber(ctx context.Context, req GetRandomNumberRequest) (*GetRandomNumberResponse, error)

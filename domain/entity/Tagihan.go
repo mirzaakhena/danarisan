@@ -6,6 +6,7 @@ import (
 )
 
 type Tagihan struct {
+	BaseModel
 	ID               vo.TagihanID     //
 	ArisanID         vo.ArisanID      //
 	UndianID         vo.UndianID      //

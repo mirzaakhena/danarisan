@@ -15,8 +15,8 @@ type undangPesertaInteractor struct {
 	outport port.UndangPesertaOutport
 }
 
-// NewUndangPesertaUsecase ...
-func NewUndangPesertaUsecase(outputPort port.UndangPesertaOutport) port.UndangPesertaInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.UndangPesertaOutport) port.UndangPesertaInport {
 	return &undangPesertaInteractor{
 		outport: outputPort,
 	}

@@ -13,8 +13,8 @@ type registerPesertaInteractor struct {
 	outport port.RegisterPesertaOutport
 }
 
-// NewRegisterPesertaUsecase ...
-func NewRegisterPesertaUsecase(outputPort port.RegisterPesertaOutport) port.RegisterPesertaInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.RegisterPesertaOutport) port.RegisterPesertaInport {
 	return &registerPesertaInteractor{
 		outport: outputPort,
 	}

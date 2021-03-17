@@ -16,8 +16,8 @@ type kocokUndianInteractor struct {
 	outport port.KocokUndianOutport
 }
 
-// NewKocokUndianUsecase ...
-func NewKocokUndianUsecase(outputPort port.KocokUndianOutport) port.KocokUndianInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.KocokUndianOutport) port.KocokUndianInport {
 	return &kocokUndianInteractor{
 		outport: outputPort,
 	}
@@ -50,7 +50,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return err
 		}
 
-		if len(slotsObj) == 0 {
+		if slotsObj == nil || len(slotsObj) == 0 {
 			return apperror.SemuaPesertaSudahMenang
 		}
 
@@ -78,8 +78,8 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 		totalNilaiUndian := arisanObj.GetTotalNilaiUndian()
 
 		_, err = r.outport.TopupPeserta(ctx, port.TopupPesertaRequest{
-			PesertaID: string(pesertaObj.ID),
-			TotalTopup:  totalNilaiUndian,
+			PesertaID:  string(pesertaObj.ID),
+			TotalTopup: totalNilaiUndian,
 		})
 		if err != nil {
 			// TODO Jika gagal harus ada mekanisme retry
@@ -249,6 +249,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 		}
 
+		// ARISAN MASIH BERLANJUT
 		if !arisanObj.SudahSelesai() {
 
 			tanggalTagihanBerikutnya := undianObj.TanggalTagihan.AddDate(0, 1, 0)
@@ -276,6 +277,10 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 				return err
 			}
 
+			if slots == nil {
+				return nil
+			}
+
 			for _, sp := range slots {
 				tagihanObj, err := entity.NewTagihan(entity.TagihanRequest{
 					ArisanID:   arisanObj.ID,
@@ -295,6 +300,29 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 			}
 
+		} else
+
+		// ARISAN SUDAH SELESAI
+		{
+			for _, slot := range slotsObj {
+
+				pesertaObj, err := r.outport.FindOnePeserta(ctx, slot.PesertaID)
+				if err != nil {
+					return err
+				}
+
+				if pesertaObj == nil {
+					return apperror.PesertaTidakDitemukan
+				}
+
+				pesertaObj.ResetPeserta()
+
+				_, err = r.outport.SavePeserta(ctx, pesertaObj)
+				if err != nil {
+					return err
+				}
+
+			}
 		}
 
 		return nil

@@ -15,8 +15,8 @@ type jawabUndanganInteractor struct {
 	outport port.JawabUndanganOutport
 }
 
-// NewJawabUndanganUsecase ...
-func NewJawabUndanganUsecase(outputPort port.JawabUndanganOutport) port.JawabUndanganInport {
+// NewUsecase ...
+func NewUsecase(outputPort port.JawabUndanganOutport) port.JawabUndanganInport {
 	return &jawabUndanganInteractor{
 		outport: outputPort,
 	}
