@@ -16,4 +16,5 @@ const (
 	PesertaTidakDitemukan          ErrorType = "ER1000 peserta tidak ditemukan"
 	TagihanTidakDitemukan          ErrorType = "ER1000 tagihan tidak ditemukan"
 	UndianTidakDitemukan           ErrorType = "ER1000 undian tidak ditemukan"
+	PesertaSudahMenjadiAdmin       ErrorType = "ER1000 peserta sudah menjadi admin"
 )

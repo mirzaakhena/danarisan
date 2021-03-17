@@ -58,3 +58,9 @@ func (r *Peserta) DitawarkanIkutArisan(arisanID vo.ArisanID) {
 	r.StateUndangan = vo.DitawarkanUndanganStateEnum
 	r.ArisanYgDiikuti = arisanID
 }
+
+func (r *Peserta) ResetPeserta() {
+	r.IsAdmin = false
+	r.StateUndangan = vo.NganggurUndanganStateEnum
+	r.ArisanYgDiikuti = ""
+}

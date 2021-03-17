@@ -2,6 +2,7 @@ package buatarisan
 
 import (
 	"context"
+	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/domain/vo"
@@ -28,6 +29,19 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 
 	err = service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
+		if err != nil {
+			return err
+		}
+
+		if pesertaObj == nil {
+			return apperror.PesertaTidakDitemukan
+		}
+
+		if pesertaObj.IsAdmin && pesertaObj.ArisanYgDiikuti != "" {
+			return apperror.PesertaSudahMenjadiAdmin
+		}
+
 		arisanObj, err := entity.NewArisan(entity.ArisanRequest{
 			GenerateID:      r.outport,
 			Nama:            req.NamaArisan,
@@ -39,11 +53,6 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 		}
 
 		_, err = r.outport.SaveArisan(ctx, arisanObj)
-		if err != nil {
-			return err
-		}
-
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
 		if err != nil {
 			return err
 		}
