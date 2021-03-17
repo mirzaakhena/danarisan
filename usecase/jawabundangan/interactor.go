@@ -88,8 +88,6 @@ func (r *jawabUndanganInteractor) Execute(ctx context.Context, req port.JawabUnd
 			return err
 		}
 
-
-
 		return nil
 	})
 	if err != nil {

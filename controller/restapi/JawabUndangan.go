@@ -37,4 +37,3 @@ func JawabUndanganHandler(inputPort port.JawabUndanganInport) gin.HandlerFunc {
 		c.JSON(http.StatusOK, res)
 	}
 }
-

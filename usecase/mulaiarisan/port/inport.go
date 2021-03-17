@@ -11,7 +11,7 @@ type MulaiArisanInport interface {
 
 // MulaiArisanRequest ...
 type MulaiArisanRequest struct {
-	ArisanID string
+	AdminID string
 }
 
 // MulaiArisanResponse ...

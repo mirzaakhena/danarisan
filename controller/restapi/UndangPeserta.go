@@ -10,7 +10,6 @@ import (
 	"github.com/mirzaakhena/danarisan/usecase/undangpeserta/port"
 )
 
-
 // UndangPesertaHandler ...
 func UndangPesertaHandler(inputPort port.UndangPesertaInport) gin.HandlerFunc {
 

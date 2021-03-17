@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/mirzaakhena/danarisan/infrastructure/util"
 	"github.com/mirzaakhena/danarisan/application/apperror"
+	"github.com/mirzaakhena/danarisan/infrastructure/util"
 )
 
 type Response struct {

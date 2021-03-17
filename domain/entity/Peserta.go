@@ -6,7 +6,7 @@ import (
 
 type Peserta struct {
 	BaseModel
-	ID              vo.PesertaID     `gorm:"primaryKey"`//
+	ID              vo.PesertaID     `gorm:"primaryKey"` //
 	Nama            string           //
 	Membayar        int              //
 	TidakMembayar   int              //

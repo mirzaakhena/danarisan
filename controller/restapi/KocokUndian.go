@@ -37,5 +37,3 @@ func KocokUndianHandler(inputPort port.KocokUndianInport) gin.HandlerFunc {
 		c.JSON(http.StatusOK, res)
 	}
 }
-
-

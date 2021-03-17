@@ -14,7 +14,6 @@ var onceRepoImpl sync.Once
 
 var repoImplObj RepositoryImplementation
 
-
 type RepositoryImplementation struct {
 }
 

@@ -7,7 +7,7 @@ import (
 
 type Tagihan struct {
 	BaseModel
-	ID               vo.TagihanID    `gorm:"primaryKey"` //
+	ID               vo.TagihanID     `gorm:"primaryKey"` //
 	ArisanID         vo.ArisanID      //
 	UndianID         vo.UndianID      //
 	PesertaID        vo.PesertaID     //

@@ -1,0 +1,39 @@
+API ARISAN
+-----------
+
+
+POST localhost:8080/registerpeserta
+{
+    "PesertaID": "norman"
+}
+
+
+POST localhost:8080/buatarisan
+{
+    "PesertaID": "mirza",
+    "NamaArisan": "Arisan Hello P-Zero",
+    "SetoranTiapSlot": 5,
+    "TanggalTagihan": "2021-03-20",
+    "TanggalUndian": "2021-03-25",
+    "BiayaArisan": 0
+}
+
+
+POST localhost:8080/undangpeserta
+{
+    "AdminID": "mirza",
+    "PesertaYangDiundangID": "vira"
+}
+
+
+POST http://localhost:8080/mulaiarisan
+{
+    "AdminID": "mirza"
+}
+
+
+POST localhost:8080/jawabundangan
+{
+    "PesertaID": "norman",
+    "Jawaban": "TERIMA"
+}

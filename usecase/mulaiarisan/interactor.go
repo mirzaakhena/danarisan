@@ -30,7 +30,16 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		arisanObj, err := r.outport.FindOneArisan(ctx, vo.ArisanID(req.ArisanID))
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.AdminID))
+		if err != nil {
+			return err
+		}
+
+		if !pesertaObj.IsAdmin {
+			return apperror.PesertaBukanAdmin
+		}
+
+		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanYgDiikuti)
 		if err != nil {
 			return err
 		}
