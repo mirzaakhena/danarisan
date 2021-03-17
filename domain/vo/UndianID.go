@@ -10,6 +10,6 @@ type UndianIDRequest struct {
 }
 
 func NewUndianID(req UndianIDRequest) (UndianID, error) {
-	obj := UndianID(fmt.Sprintf("%s_%s", req.ArisanID, req.PutaranKe))
+	obj := UndianID(fmt.Sprintf("%s_%d", req.ArisanID, req.PutaranKe))
 	return obj, nil
 }
