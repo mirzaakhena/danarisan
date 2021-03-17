@@ -39,7 +39,7 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 			return apperror.PesertaBukanAdmin
 		}
 
-		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanYgDiikuti)
+		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
 		if err != nil {
 			return err
 		}

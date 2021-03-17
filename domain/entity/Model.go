@@ -3,6 +3,6 @@ package entity
 import "time"
 
 type BaseModel struct {
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt time.Time `json:"-"`
+	UpdatedAt time.Time `json:"-"`
 }

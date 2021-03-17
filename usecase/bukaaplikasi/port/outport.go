@@ -9,5 +9,11 @@ import (
 type BukaAplikasiOutport interface {
 	repository.FindOnePesertaRepo
 	repository.FindOneArisanRepo
+	repository.FindAllPesertaRepo
+	repository.FindAllSlotRepo
+	repository.FindAllUndianRepo
+	repository.FindAllTagihanByArisanIDRepo
+	repository.FindAllJurnalRepo
+	repository.FindAllSaldoAkunRepo
 	service.ReadOnlyDB
 }

@@ -69,6 +69,11 @@ func (r *defaultRegistry) RegisterUsecase() {
 	r.undangPesertaHandler(gw)
 }
 
+func (r *defaultRegistry) bukaAplikasiHandler(gw *prod.SuperGateway) {
+	inport := bukaaplikasi.NewUsecase(gw)
+	r.Router.GET("/arisan/:pesertaID", controller.Authorized(), restapi.BukaAplikasiHandler(inport))
+}
+
 func (r *defaultRegistry) bayarSetoranHandler(gw *prod.SuperGateway) {
 	inport := bayarsetoran.NewUsecase(gw)
 	r.Router.POST("/bayarsetoran", controller.Authorized(), restapi.BayarSetoranHandler(inport))
@@ -77,11 +82,6 @@ func (r *defaultRegistry) bayarSetoranHandler(gw *prod.SuperGateway) {
 func (r *defaultRegistry) buatArisanHandler(gw *prod.SuperGateway) {
 	inport := buatarisan.NewUsecase(gw)
 	r.Router.POST("/buatarisan", controller.Authorized(), restapi.BuatArisanHandler(inport))
-}
-
-func (r *defaultRegistry) bukaAplikasiHandler(gw *prod.SuperGateway) {
-	inport := bukaaplikasi.NewUsecase(gw)
-	r.Router.GET("/bukaaplikasi", controller.Authorized(), restapi.BukaAplikasiHandler(inport))
 }
 
 func (r *defaultRegistry) jawabUndanganHandler(gw *prod.SuperGateway) {

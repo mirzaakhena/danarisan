@@ -18,6 +18,8 @@ type SuperGateway struct {
 	*serviceimpl.ServiceImplementation
 }
 
+
+
 // NewSuperGateway ...
 func NewSuperGateway(db *gorm.DB) *SuperGateway {
 	return &SuperGateway{

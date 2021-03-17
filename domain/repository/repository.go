@@ -56,6 +56,10 @@ type FindAllTagihanRepo interface {
 	FindAllTagihan(ctx context.Context, undianID vo.UndianID) ([]entity.Tagihan, error)
 }
 
+type FindAllTagihanByArisanIDRepo interface {
+	FindAllTagihanByArisanID(ctx context.Context, arisanID vo.ArisanID) ([]entity.Tagihan, error)
+}
+
 type FindOneTagihanRepo interface {
 	FindOneTagihan(ctx context.Context, tagihanID vo.TagihanID) (*entity.Tagihan, error)
 }
@@ -78,4 +82,20 @@ type FindLastSaldoAkunRepo interface {
 
 type FindOneArisanByAdminIDRepo interface {
 	FindOneArisanByAdminID(ctx context.Context, adminID vo.PesertaID) (*entity.Arisan, error)
+}
+
+type FindAllPesertaRepo interface {
+	FindAllPeserta(ctx context.Context, arisanID vo.ArisanID) ([]entity.Peserta, error)
+}
+
+type FindAllUndianRepo interface {
+	FindAllUndian(ctx context.Context, arisanID vo.ArisanID) ([]entity.Undian, error)
+}
+
+type FindAllSaldoAkunRepo interface {
+	FindAllSaldoAkun(ctx context.Context, arisanID vo.ArisanID) ([]entity.SaldoAkun, error)
+}
+
+type FindAllJurnalRepo interface {
+	FindAllJurnal(ctx context.Context, arisanID vo.ArisanID) ([]entity.Jurnal, error)
 }

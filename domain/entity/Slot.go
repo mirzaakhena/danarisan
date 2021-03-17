@@ -10,8 +10,8 @@ import (
 type Slot struct {
 	BaseModel
 	ID            vo.SlotID      `gorm:"primaryKey"` //
-	ArisanID      vo.ArisanID    //
-	GroupSlotID   vo.GroupSlotID //
+	ArisanID      vo.ArisanID    `json:"-"`//
+	GroupSlotID   vo.GroupSlotID `json:"-"`//
 	PesertaID     vo.PesertaID   //
 	TanggalMenang *time.Time     //
 }
