@@ -2,13 +2,13 @@ API ARISAN
 -----------
 
 
-POST localhost:8080/registerpeserta
+POST /registerpeserta
 {
     "PesertaID": "norman"
 }
 
 
-POST localhost:8080/buatarisan
+POST /buatarisan
 {
     "PesertaID": "mirza",
     "NamaArisan": "Arisan Hello P-Zero",
@@ -19,21 +19,46 @@ POST localhost:8080/buatarisan
 }
 
 
-POST localhost:8080/undangpeserta
+POST /undangpeserta
 {
     "AdminID": "mirza",
     "PesertaYangDiundangID": "vira"
 }
 
+POST /jawabundangan
+{
+    "PesertaID": "norman",
+    "Jawaban": "TERIMA"
+}
 
-POST http://localhost:8080/mulaiarisan
+
+POST /mulaiarisan
 {
     "AdminID": "mirza"
 }
 
 
-POST localhost:8080/jawabundangan
+POST /kocokundian
 {
-    "PesertaID": "norman",
-    "Jawaban": "TERIMA"
+    "UndianID": ""
 }
+
+
+POST /tagihsetoran
+{
+    "ArisanID": ""
+}
+
+
+// TRIGGERED BY DANA
+POST /bayarsetoran
+{
+    "TagihanID": ""
+}
+
+// TRIGGERED BY DANA
+POST /setorantidakdibayar
+{
+    "TagihanID": ""
+}
+

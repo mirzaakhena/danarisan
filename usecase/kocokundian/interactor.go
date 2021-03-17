@@ -30,19 +30,32 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		undianObj, err := r.outport.FindOneUndianByID(ctx, vo.UndianID(req.UndianID))
+		adminObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
+		if err != nil {
+			return err
+		}
+
+		if adminObj == nil {
+			return apperror.PesertaTidakDitemukan
+		}
+
+		if !adminObj.IsAdmin {
+			return apperror.PesertaBukanAdmin
+		}
+
+		arisanObj, err := r.outport.FindOneArisan(ctx, adminObj.ArisanID)
+
+		if arisanObj == nil {
+			return apperror.ArisanTidakDitemukan
+		}
+
+		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID, arisanObj.PutaranKe)
 		if err != nil {
 			return err
 		}
 
 		if undianObj == nil {
 			return apperror.UndianTidakDitemukan
-		}
-
-		arisanObj, err := r.outport.FindOneArisan(ctx, undianObj.ArisanID)
-
-		if arisanObj == nil {
-			return apperror.ArisanTidakDitemukan
 		}
 
 		slotsObj, err := r.outport.FindAllSlotNotWinYet(ctx, arisanObj.ID)

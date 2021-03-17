@@ -13,7 +13,7 @@ type BayarSetoranInport interface {
 // BayarSetoranRequest ...
 type BayarSetoranRequest struct {
 	TagihanID      string
-	TanggalHariIni time.Time
+	TanggalHariIni time.Time `json:"-"`
 }
 
 // BayarSetoranResponse ...

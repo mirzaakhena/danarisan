@@ -12,8 +12,8 @@ type KocokUndianInport interface {
 
 // KocokUndianRequest ...
 type KocokUndianRequest struct {
-	UndianID       string
-	TanggalHariIni time.Time
+	PesertaID      string
+	TanggalHariIni time.Time `json:"-"`
 }
 
 // KocokUndianResponse ...
