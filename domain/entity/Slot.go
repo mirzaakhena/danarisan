@@ -8,6 +8,7 @@ import (
 )
 
 type Slot struct {
+	BaseModel
 	ID            vo.SlotID
 	ArisanID      vo.ArisanID    //
 	GroupSlotID   vo.GroupSlotID //

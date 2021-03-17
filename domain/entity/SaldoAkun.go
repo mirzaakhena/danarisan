@@ -14,6 +14,7 @@ const (
 )
 
 type SaldoAkun struct {
+	BaseModel
 	ArisanID  vo.ArisanID  //
 	PesertaID vo.PesertaID //
 	JurnalID  vo.JurnalID  //

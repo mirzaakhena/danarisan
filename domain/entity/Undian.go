@@ -6,6 +6,7 @@ import (
 )
 
 type Undian struct {
+	BaseModel
 	ID             vo.UndianID //
 	ArisanID       vo.ArisanID //
 	PutaranKe      int         //

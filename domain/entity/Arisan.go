@@ -11,6 +11,7 @@ const (
 )
 
 type Arisan struct {
+	BaseModel
 	ID                       vo.ArisanID     //
 	Nama                     string          //
 	Status                   vo.ArisanStatus //

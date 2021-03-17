@@ -7,6 +7,7 @@ import (
 )
 
 type GroupSlot struct {
+	BaseModel
 	ID            vo.GroupSlotID //
 	ArisanID      vo.ArisanID    //
 	TanggalMenang *time.Time     //

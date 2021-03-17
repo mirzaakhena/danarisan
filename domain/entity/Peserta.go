@@ -5,6 +5,7 @@ import (
 )
 
 type Peserta struct {
+	BaseModel
 	ID              vo.PesertaID     //
 	Nama            string           //
 	Membayar        int              //

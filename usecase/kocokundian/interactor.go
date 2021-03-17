@@ -50,7 +50,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return err
 		}
 
-		if len(slotsObj) == 0 {
+		if slotsObj == nil || len(slotsObj) == 0 {
 			return apperror.SemuaPesertaSudahMenang
 		}
 
@@ -275,6 +275,10 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			slots, err := r.outport.FindAllSlot(ctx, arisanObj.ID)
 			if err != nil {
 				return err
+			}
+
+			if slots == nil {
+				return nil
 			}
 
 			for _, sp := range slots {

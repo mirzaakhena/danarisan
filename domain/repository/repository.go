@@ -28,9 +28,17 @@ type SaveTagihanRepo interface {
 	SaveTagihan(ctx context.Context, obj *entity.Tagihan) (*entity.Tagihan, error)
 }
 
-type CountPesertaRepo interface {
-	CountPeserta(ctx context.Context, obj *entity.Arisan) (*entity.Arisan, error)
+type SaveJurnalRepo interface {
+	SaveJurnal(ctx context.Context, obj *entity.Jurnal) (*entity.Jurnal, error)
 }
+
+type SaveSaldoAkunRepo interface {
+	SaveSaldoAkun(ctx context.Context, obj *entity.SaldoAkun) (*entity.SaldoAkun, error)
+}
+
+//type CountPesertaRepo interface {
+//	CountPeserta(ctx context.Context, obj *entity.Arisan) (*entity.Arisan, error)
+//}
 
 type FindOneArisanRepo interface {
 	FindOneArisan(ctx context.Context, arisanID vo.ArisanID) (*entity.Arisan, error)
@@ -58,14 +66,6 @@ type FindAllSlotRepo interface {
 
 type FindOnePesertaRepo interface {
 	FindOnePeserta(ctx context.Context, pesertaID vo.PesertaID) (*entity.Peserta, error)
-}
-
-type SaveJurnalRepo interface {
-	SaveJurnal(ctx context.Context, obj *entity.Jurnal) (*entity.Jurnal, error)
-}
-
-type SaveSaldoAkunRepo interface {
-	SaveSaldoAkun(ctx context.Context, obj *entity.SaldoAkun) (*entity.SaldoAkun, error)
 }
 
 type FindAllSlotNotWinYetRepo interface {

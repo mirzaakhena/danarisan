@@ -7,6 +7,7 @@ import (
 )
 
 type Jurnal struct {
+	BaseModel
 	ID         vo.JurnalID   //
 	ArisanID   vo.ArisanID   //
 	PesertaID  vo.PesertaID  //
