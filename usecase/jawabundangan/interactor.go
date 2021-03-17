@@ -3,6 +3,7 @@ package jawabundangan
 import (
 	"context"
 	"github.com/mirzaakhena/danarisan/application/apperror"
+	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
 	"github.com/mirzaakhena/danarisan/domain/vo"
 
@@ -71,6 +72,23 @@ func (r *jawabUndanganInteractor) Execute(ctx context.Context, req port.JawabUnd
 		if err != nil {
 			return err
 		}
+
+		slotObj, err := entity.NewSlot(entity.SlotRequest{
+			GenerateID:  r.outport,
+			ArisanID:    arisanObj.ID,
+			GroupSlotID: "",
+			PesertaID:   pesertaObj.ID,
+		})
+		if err != nil {
+			return err
+		}
+
+		_, err = r.outport.SaveSlot(ctx, slotObj)
+		if err != nil {
+			return err
+		}
+
+
 
 		return nil
 	})
