@@ -394,13 +394,6 @@ func (r *RepositoryImplementation) FindAllSlotNotWinYet(ctx context.Context, ari
 	return slotObjs, nil
 }
 
-//func (r *RepositoryImplementation) CountPeserta(ctx context.Context, obj *entity.Arisan) (*entity.Arisan, error) {
-//
-//	// TODO count peserta....
-//
-//	return nil, nil
-//}
-
 func (r *RepositoryImplementation) FindLastSaldoAkun(ctx context.Context, arisanID vo.ArisanID, pesertaID vo.PesertaID, akunType vo.AkunType) (*entity.SaldoAkun, error) {
 
 	log.InfoRequest(ctx, util.MustJSON(map[string]interface{}{"arisanID": arisanID, "pesertaID": pesertaID, "akunType": akunType}))

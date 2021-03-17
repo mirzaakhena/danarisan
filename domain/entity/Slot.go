@@ -9,7 +9,7 @@ import (
 
 type Slot struct {
 	BaseModel
-	ID            vo.SlotID
+	ID            vo.SlotID `gorm:"primaryKey"` //
 	ArisanID      vo.ArisanID    //
 	GroupSlotID   vo.GroupSlotID //
 	PesertaID     vo.PesertaID   //

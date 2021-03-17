@@ -12,7 +12,7 @@ const (
 
 type Arisan struct {
 	BaseModel
-	ID                       vo.ArisanID     //
+	ID                       vo.ArisanID     `gorm:"primaryKey"` //
 	Nama                     string          //
 	Status                   vo.ArisanStatus //
 	ArisanType               vo.ArisanType   //
