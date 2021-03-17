@@ -24,13 +24,13 @@ import (
 	"github.com/mirzaakhena/danarisan/infrastructure/server"
 )
 
-type defaultRegistry struct {
+type arisanSystemRegistry struct {
 	server.GinHTTPHandler
 }
 
-func NewDefaultRegistry() application.RegistryContract {
+func NewArisanSystemRegistry() application.RegistryContract {
 
-	config.InitConfig("config-default", ".")
+	config.InitConfig("config-arisansystem", ".")
 	serverPort := config.GetInt("server.port", 8080)
 
 	log.UseRotateFile(
@@ -39,7 +39,7 @@ func NewDefaultRegistry() application.RegistryContract {
 		config.GetInt("logfile.age", 14),
 	)
 
-	app := defaultRegistry{ //
+	app := arisanSystemRegistry{ //
 		GinHTTPHandler: server.NewGinHTTPHandler(fmt.Sprintf(":%d", serverPort)),
 	}
 
@@ -48,9 +48,11 @@ func NewDefaultRegistry() application.RegistryContract {
 }
 
 // RegisterUsecase is implementation of RegistryContract.RegisterUsecase()
-func (r *defaultRegistry) RegisterUsecase() {
+func (r *arisanSystemRegistry) RegisterUsecase() {
 
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	databaseConnectionString := config.GetString("database.connectionstring", "test.db")
+
+	db, err := gorm.Open(sqlite.Open(databaseConnectionString), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
@@ -69,52 +71,52 @@ func (r *defaultRegistry) RegisterUsecase() {
 	r.undangPesertaHandler(gw)
 }
 
-func (r *defaultRegistry) bukaAplikasiHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) bukaAplikasiHandler(gw *prod.SuperGateway) {
 	inport := bukaaplikasi.NewUsecase(gw)
 	r.Router.GET("/arisan/:pesertaID", controller.Authorized(), restapi.BukaAplikasiHandler(inport))
 }
 
-func (r *defaultRegistry) bayarSetoranHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) bayarSetoranHandler(gw *prod.SuperGateway) {
 	inport := bayarsetoran.NewUsecase(gw)
 	r.Router.POST("/bayarsetoran", controller.Authorized(), restapi.BayarSetoranHandler(inport))
 }
 
-func (r *defaultRegistry) buatArisanHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) buatArisanHandler(gw *prod.SuperGateway) {
 	inport := buatarisan.NewUsecase(gw)
 	r.Router.POST("/buatarisan", controller.Authorized(), restapi.BuatArisanHandler(inport))
 }
 
-func (r *defaultRegistry) jawabUndanganHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) jawabUndanganHandler(gw *prod.SuperGateway) {
 	inport := jawabundangan.NewUsecase(gw)
 	r.Router.POST("/jawabundangan", controller.Authorized(), restapi.JawabUndanganHandler(inport))
 }
 
-func (r *defaultRegistry) kocokUndianHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) kocokUndianHandler(gw *prod.SuperGateway) {
 	inport := kocokundian.NewUsecase(gw)
 	r.Router.POST("/kocokundian", controller.Authorized(), restapi.KocokUndianHandler(inport))
 }
 
-func (r *defaultRegistry) mulaiArisanHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) mulaiArisanHandler(gw *prod.SuperGateway) {
 	inport := mulaiarisan.NewUsecase(gw)
 	r.Router.POST("/mulaiarisan", controller.Authorized(), restapi.MulaiArisanHandler(inport))
 }
 
-func (r *defaultRegistry) registerPesertaHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) registerPesertaHandler(gw *prod.SuperGateway) {
 	inport := registerpeserta.NewUsecase(gw)
 	r.Router.POST("/registerpeserta", controller.Authorized(), restapi.RegisterPesertaHandler(inport))
 }
 
-func (r *defaultRegistry) setoranTidakDibayarHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) setoranTidakDibayarHandler(gw *prod.SuperGateway) {
 	inport := setorantidakdibayar.NewUsecase(gw)
 	r.Router.POST("/setorantidakdibayar", controller.Authorized(), restapi.SetoranTidakDibayarHandler(inport))
 }
 
-func (r *defaultRegistry) tagihSetoranHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) tagihSetoranHandler(gw *prod.SuperGateway) {
 	inport := tagihsetoran.NewUsecase(gw)
 	r.Router.POST("/tagihsetoran", controller.Authorized(), restapi.TagihSetoranHandler(inport))
 }
 
-func (r *defaultRegistry) undangPesertaHandler(gw *prod.SuperGateway) {
+func (r *arisanSystemRegistry) undangPesertaHandler(gw *prod.SuperGateway) {
 	inport := undangpeserta.NewUsecase(gw)
 	r.Router.POST("/undangpeserta", controller.Authorized(), restapi.UndangPesertaHandler(inport))
 }

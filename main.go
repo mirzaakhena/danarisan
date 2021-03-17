@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/mirzaakhena/danarisan/application"
 	"github.com/mirzaakhena/danarisan/application/registry"
 )
@@ -11,14 +12,14 @@ func main() {
 	flag.Parse()
 	switch flag.Arg(0) {
 
-	// case "firstService":
-	//   application.Run(registry.NewOrderServiceRegistry())
+	case "danarisan":
+		application.Run(registry.NewArisanSystemRegistry())
 
-	// case "secondService":
-	//   application.Run(registry.NewOrderServiceRegistry())
+	case "danamock":
+	  application.Run(registry.NewDANAMockRegistry())
 
 	default:
-		application.Run(registry.NewDefaultRegistry())
+		fmt.Printf("Try\ngo run main.go danarisan\nor\ngo run main.go danamock")
 	}
 
 }
