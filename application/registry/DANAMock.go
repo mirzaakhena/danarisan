@@ -2,18 +2,15 @@ package registry
 
 import (
 	"fmt"
-	"github.com/mirzaakhena/danarisan/infrastructure/config"
-	"github.com/mirzaakhena/danarisan/infrastructure/log"
-	"github.com/mirzaakhena/danarisan/usecase/bayarsetoran"
-	"github.com/mirzaakhena/danarisan/usecase/buatarisan"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-
 	"github.com/mirzaakhena/danarisan/application"
 	"github.com/mirzaakhena/danarisan/controller"
-	"github.com/mirzaakhena/danarisan/controller/restapi"
-	"github.com/mirzaakhena/danarisan/gateway/prod"
+	"github.com/mirzaakhena/danarisan/controller/danamock"
+	"github.com/mirzaakhena/danarisan/gateway/mockserver"
+	"github.com/mirzaakhena/danarisan/infrastructure/config"
+	"github.com/mirzaakhena/danarisan/infrastructure/log"
 	"github.com/mirzaakhena/danarisan/infrastructure/server"
+	"github.com/mirzaakhena/danarisan/usecase/createpayment"
+	"github.com/mirzaakhena/danarisan/usecase/topup"
 )
 
 type danaMockRegistry struct {
@@ -41,28 +38,19 @@ func NewDANAMockRegistry() application.RegistryContract {
 
 // RegisterUsecase is implementation of RegistryContract.RegisterUsecase()
 func (r *danaMockRegistry) RegisterUsecase() {
-
-	databaseConnectionString := config.GetString("database.connectionstring", "test.db")
-
-	db, err := gorm.Open(sqlite.Open(databaseConnectionString), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-
-	gw := prod.NewSuperGateway(db)
-
-	r.createOrderHandler(gw)
-	r.topupHandler(gw)
-}
-
-func (r *danaMockRegistry) createOrderHandler(gw *prod.SuperGateway) {
-	inport := bayarsetoran.NewUsecase(gw)
-	r.Router.POST("/bayarsetoran", controller.Authorized(), restapi.BayarSetoranHandler(inport))
-}
-
-func (r *danaMockRegistry) topupHandler(gw *prod.SuperGateway) {
-	inport := buatarisan.NewUsecase(gw)
-	r.Router.POST("/buatarisan", controller.Authorized(), restapi.BuatArisanHandler(inport))
+	r.createOrderHandler()
+	r.topupHandler()
 }
 
 
+func (r *danaMockRegistry) createOrderHandler() {
+	outport := mockserver.NewCreatePaymentGateway()
+	inport := createpayment.NewUsecase(outport)
+	r.Router.POST("/createpayment", controller.Authorized(), danamock.CreatePaymentHandler(inport))
+}
+
+func (r *danaMockRegistry) topupHandler() {
+	outport := mockserver.NewTopupGateway()
+	inport := topup.NewUsecase(outport)
+	r.Router.POST("/topup", controller.Authorized(), danamock.TopupHandler(inport))
+}

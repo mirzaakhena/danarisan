@@ -4,8 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/mirzaakhena/danarisan/domain/entity"
-
 	"github.com/mirzaakhena/danarisan/domain/repository"
 	"github.com/mirzaakhena/danarisan/domain/service"
 )
@@ -25,9 +23,8 @@ type TagihSetoranOutport interface {
 type CreatePaymentRequest struct {
 	TagihanID          string
 	Nominal            float64
-	ArisanID           string
+	PesertaID          string
 	TanggalKadaluwarsa time.Time
-	Tagihan            entity.Tagihan
 }
 
 // CreatePaymentResponse ...

@@ -18,8 +18,6 @@ type SuperGateway struct {
 	*serviceimpl.ServiceImplementation
 }
 
-
-
 // NewSuperGateway ...
 func NewSuperGateway(db *gorm.DB) *SuperGateway {
 	return &SuperGateway{
@@ -31,7 +29,9 @@ func NewSuperGateway(db *gorm.DB) *SuperGateway {
 }
 
 func (r *SuperGateway) CreatePayment(ctx context.Context, req port1.CreatePaymentRequest) (*port1.CreatePaymentResponse, error) {
+
 	// TODO create mock server
+
 	return nil, nil
 }
 
