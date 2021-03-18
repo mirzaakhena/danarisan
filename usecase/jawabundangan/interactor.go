@@ -30,7 +30,7 @@ func (r *jawabUndanganInteractor) Execute(ctx context.Context, req port.JawabUnd
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, req.PesertaID)
 		if err != nil {
 			return err
 		}
@@ -52,12 +52,12 @@ func (r *jawabUndanganInteractor) Execute(ctx context.Context, req port.JawabUnd
 			return err
 		}
 
-		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {
 			return err
 		}
 
-		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
+		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID.String())
 		if err != nil {
 			return err
 		}
@@ -68,7 +68,7 @@ func (r *jawabUndanganInteractor) Execute(ctx context.Context, req port.JawabUnd
 
 		arisanObj.TambahPeserta()
 
-		_, err = r.outport.SaveArisan(ctx, arisanObj)
+		err = r.outport.SaveArisan(ctx, arisanObj)
 		if err != nil {
 			return err
 		}
@@ -83,7 +83,7 @@ func (r *jawabUndanganInteractor) Execute(ctx context.Context, req port.JawabUnd
 			return err
 		}
 
-		_, err = r.outport.SaveSlot(ctx, slotObj)
+		err = r.outport.SaveSlot(ctx, slotObj)
 		if err != nil {
 			return err
 		}

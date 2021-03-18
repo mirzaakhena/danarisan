@@ -12,3 +12,7 @@ func NewSlotID(req SlotIDRequest) (SlotID, error) {
 	obj := SlotID(req.GenerateID.Generate())
 	return obj, nil
 }
+
+func (r SlotID) String() string {
+	return string(r)
+}

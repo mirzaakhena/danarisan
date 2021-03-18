@@ -39,6 +39,10 @@ func (r JurnalType) GetDetail() JurnalTypeDetail {
 	return enumJurnalType[r]
 }
 
+func (r JurnalType) String() string {
+	return string(r)
+}
+
 func (r JurnalType) PossibleValues() []JurnalType {
 	res := []JurnalType{}
 	for key, _ := range enumJurnalType {

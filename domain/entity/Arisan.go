@@ -25,12 +25,12 @@ type Arisan struct {
 	JumlahPeserta            int             //
 	AdminID                  vo.PesertaID    //
 
-	ListPeserta   []Peserta   `gorm:"-"` //
-	ListSlot      []Slot      `gorm:"-"` //
-	ListUndian    []Undian    `gorm:"-"` //
-	ListTagihan   []Tagihan   `gorm:"-"` //
-	ListJurnal    []Jurnal    `json:"-"` //
-	ListSaldoAkun []SaldoAkun `json:"-"` //
+	ListPeserta   []*Peserta   `gorm:"-"` //
+	ListSlot      []*Slot      `gorm:"-"` //
+	ListUndian    []*Undian    `gorm:"-"` //
+	ListTagihan   []*Tagihan   `gorm:"-"` //
+	ListJurnal    []*Jurnal    `gorm:"-"` //
+	ListSaldoAkun []*SaldoAkun `gorm:"-"` //
 }
 
 type ArisanRequest struct {

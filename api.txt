@@ -2,15 +2,48 @@ API ARISAN
 -----------
 
 GET /arisan/:pesertaID
+Content-Type: application/json
 
+###
 
 POST /registerpeserta
-{
-    "PesertaID": "norman"
-}
+Content-Type: application/json
 
+{"PesertaID": "mirza"}
+
+###
+
+POST /registerpeserta
+Content-Type: application/json
+
+{"PesertaID": "vira"}
+
+###
+
+POST /registerpeserta
+Content-Type: application/json
+
+{"PesertaID": "ninis"}
+
+###
+
+POST /registerpeserta
+Content-Type: application/json
+
+{"PesertaID": "dilla"}
+
+###
+
+POST /registerpeserta
+Content-Type: application/json
+
+{"PesertaID": "arya"}
+
+###
 
 POST /buatarisan
+Content-Type: application/json
+
 {
     "PesertaID": "mirza",
     "NamaArisan": "Arisan Hello P-Zero",
@@ -20,11 +53,12 @@ POST /buatarisan
     "BiayaArisan": 0
 }
 
-
 POST /undangpeserta
+Content-Type: application/json
+
 {
     "AdminID": "mirza",
-    "PesertaYangDiundangID": "vira"
+    "PesertaIDs": ["vira", "dilla", "ninis", ""]
 }
 
 POST /jawabundangan

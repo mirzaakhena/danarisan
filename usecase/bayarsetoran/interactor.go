@@ -29,7 +29,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		tagihanObj, err := r.outport.FindOneTagihan(ctx, vo.TagihanID(req.TagihanID))
+		tagihanObj, err := r.outport.FindOneTagihan(ctx, req.TagihanID)
 		if err != nil {
 			return err
 		}
@@ -40,12 +40,12 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 
 		tagihanObj.Bayar(req.TanggalHariIni)
 
-		_, err = r.outport.SaveTagihan(ctx, tagihanObj)
+		err = r.outport.SaveTagihan(ctx, tagihanObj)
 		if err != nil {
 			return err
 		}
 
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, tagihanObj.PesertaID)
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, tagihanObj.PesertaID.String())
 		if err != nil {
 			return err
 		}
@@ -56,7 +56,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 
 		pesertaObj.MelakukanPembayaran()
 
-		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {
 			return err
 		}
@@ -75,14 +75,14 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 				return err
 			}
 
-			_, err = r.outport.SaveJurnal(ctx, jurnalObj)
+			err = r.outport.SaveJurnal(ctx, jurnalObj)
 			if err != nil {
 				return err
 			}
 
 			// HARTA BERTAMBAH
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID, pesertaObj.ID, vo.HartaAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID.String(), pesertaObj.ID.String(), vo.HartaAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -99,7 +99,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
 				if err != nil {
 					return err
 				}
@@ -107,7 +107,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 
 			// MODAL BERTAMBAH
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID, pesertaObj.ID, vo.ModalAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID.String(), pesertaObj.ID.String(), vo.ModalAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -124,7 +124,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
 				if err != nil {
 					return err
 				}
@@ -146,14 +146,14 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 				return err
 			}
 
-			_, err = r.outport.SaveJurnal(ctx, jurnalObj)
+			err = r.outport.SaveJurnal(ctx, jurnalObj)
 			if err != nil {
 				return err
 			}
 
 			// HARTA BERTAMBAH
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID, pesertaObj.ID, vo.HartaAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID.String(), pesertaObj.ID.String(), vo.HartaAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -170,7 +170,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
 				if err != nil {
 					return err
 				}
@@ -178,7 +178,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 
 			// PIUTANG BERTAMBAH
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID, pesertaObj.ID, vo.PiutangAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, tagihanObj.ArisanID.String(), pesertaObj.ID.String(), vo.PiutangAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -195,7 +195,7 @@ func (r *bayarSetoranInteractor) Execute(ctx context.Context, req port.BayarSeto
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
 				if err != nil {
 					return err
 				}

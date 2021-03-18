@@ -39,6 +39,10 @@ func (r TagihanStatus) GetDetail() TagihanStatusDetail {
 	return enumTagihanStatus[r]
 }
 
+func (r TagihanStatus) String() string {
+	return string(r)
+}
+
 func (r TagihanStatus) PossibleValues() []TagihanStatus {
 	res := []TagihanStatus{}
 	for key, _ := range enumTagihanStatus {

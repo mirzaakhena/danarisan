@@ -10,3 +10,7 @@ func NewAcquirementID(req AcquirementIDRequest) (AcquirementID, error) {
 	obj := AcquirementID(req.AcquirementID)
 	return obj, nil
 }
+
+func (r AcquirementID) String() string {
+	return string(r)
+}

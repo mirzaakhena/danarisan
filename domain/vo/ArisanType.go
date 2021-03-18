@@ -37,6 +37,10 @@ func (r ArisanType) GetDetail() ArisanTypeDetail {
 	return enumArisanType[r]
 }
 
+func (r ArisanType) String() string {
+	return string(r)
+}
+
 func (r ArisanType) PossibleValues() []ArisanType {
 	res := []ArisanType{}
 	for key := range enumArisanType {

@@ -12,3 +12,7 @@ func NewJurnalID(req JurnalIDRequest) (JurnalID, error) {
 	obj := JurnalID(req.GenerateID.Generate())
 	return obj, nil
 }
+
+func (r JurnalID) String() string {
+	return string(r)
+}

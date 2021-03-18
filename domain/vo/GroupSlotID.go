@@ -13,3 +13,7 @@ func NewGroupSlotID(req GroupSlotIDRequest) (GroupSlotID, error) {
 	obj := GroupSlotID(fmt.Sprintf("%s_%d", req.ArisanID, req.Index))
 	return obj, nil
 }
+
+func (r GroupSlotID) String() string {
+	return string(r)
+}

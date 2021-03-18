@@ -4,8 +4,6 @@ import (
 	"context"
 	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/service"
-	"github.com/mirzaakhena/danarisan/domain/vo"
-
 	"github.com/mirzaakhena/danarisan/usecase/setorantidakdibayar/port"
 )
 
@@ -29,7 +27,7 @@ func (r *setoranTidakDibayarInteractor) Execute(ctx context.Context, req port.Se
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		tagihanObj, err := r.outport.FindOneTagihan(ctx, vo.TagihanID(req.TagihanID))
+		tagihanObj, err := r.outport.FindOneTagihan(ctx, req.TagihanID)
 		if err != nil {
 			return err
 		}
@@ -40,12 +38,12 @@ func (r *setoranTidakDibayarInteractor) Execute(ctx context.Context, req port.Se
 
 		tagihanObj.TidakDiBayar()
 
-		_, err = r.outport.SaveTagihan(ctx, tagihanObj)
+		err = r.outport.SaveTagihan(ctx, tagihanObj)
 		if err != nil {
 			return err
 		}
 
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, tagihanObj.PesertaID)
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, tagihanObj.PesertaID.String())
 		if err != nil {
 			return err
 		}
@@ -56,7 +54,7 @@ func (r *setoranTidakDibayarInteractor) Execute(ctx context.Context, req port.Se
 
 		pesertaObj.TidakMelakukanPembayaran()
 
-		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {
 			return err
 		}

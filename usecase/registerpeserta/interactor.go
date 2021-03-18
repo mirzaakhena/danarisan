@@ -38,7 +38,7 @@ func (r *registerPesertaInteractor) Execute(ctx context.Context, req port.Regist
 			return err
 		}
 
-		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {
 			return err
 		}

@@ -30,7 +30,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		adminObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
+		adminObj, err := r.outport.FindOnePeserta(ctx, req.PesertaID)
 		if err != nil {
 			return err
 		}
@@ -43,13 +43,13 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return apperror.PesertaBukanAdmin
 		}
 
-		arisanObj, err := r.outport.FindOneArisan(ctx, adminObj.ArisanID)
+		arisanObj, err := r.outport.FindOneArisan(ctx, adminObj.ArisanID.String())
 
 		if arisanObj == nil {
 			return apperror.ArisanTidakDitemukan
 		}
 
-		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID, arisanObj.PutaranKe)
+		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID.String(), arisanObj.PutaranKe)
 		if err != nil {
 			return err
 		}
@@ -58,7 +58,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return apperror.UndianTidakDitemukan
 		}
 
-		slotsObj, err := r.outport.FindAllSlotNotWinYet(ctx, arisanObj.ID)
+		slotsObj, err := r.outport.FindAllSlotNotWinYet(ctx, arisanObj.ID.String())
 		if err != nil {
 			return err
 		}
@@ -79,7 +79,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return err
 		}
 
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, winnerSlot.PesertaID)
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, winnerSlot.PesertaID.String())
 		if err != nil {
 			return err
 		}
@@ -99,14 +99,14 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			return err
 		}
 
-		_, err = r.outport.SaveSlot(ctx, &winnerSlot)
+		err = r.outport.SaveSlot(ctx, winnerSlot)
 		if err != nil {
 			return err
 		}
 
 		arisanObj.SiapkanArisanBerikutnya()
 
-		_, err = r.outport.SaveArisan(ctx, arisanObj)
+		err = r.outport.SaveArisan(ctx, arisanObj)
 		if err != nil {
 			return err
 		}
@@ -124,7 +124,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 				return err
 			}
 
-			_, err = r.outport.SaveJurnal(ctx, jurnalObj)
+			err = r.outport.SaveJurnal(ctx, jurnalObj)
 			if err != nil {
 				return err
 			}
@@ -132,7 +132,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 			// HARTA BERTAMBAH
 			{
 
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID, pesertaObj.ID, vo.HartaAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID.String(), pesertaObj.ID.String(), vo.HartaAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -149,7 +149,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
 				if err != nil {
 					return err
 				}
@@ -158,7 +158,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 			// UTANG BERTAMBAH
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID, pesertaObj.ID, vo.UtangAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID.String(), pesertaObj.ID.String(), vo.UtangAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -175,7 +175,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
 				if err != nil {
 					return err
 				}
@@ -197,12 +197,12 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 				return err
 			}
 
-			_, err = r.outport.SaveJurnal(ctx, jurnalObj)
+			err = r.outport.SaveJurnal(ctx, jurnalObj)
 			if err != nil {
 				return err
 			}
 
-			lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID, pesertaObj.ID, vo.PiutangAkunTypeEnum)
+			lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID.String(), pesertaObj.ID.String(), vo.PiutangAkunTypeEnum.String())
 			if err != nil {
 				return err
 			}
@@ -211,7 +211,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 			// UTANG BERKURANG
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID, pesertaObj.ID, vo.UtangAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID.String(), pesertaObj.ID.String(), vo.UtangAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -228,7 +228,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunHartaObj)
 				if err != nil {
 					return err
 				}
@@ -237,7 +237,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 			// PIUTANG BERKURANG
 			{
-				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID, pesertaObj.ID, vo.PiutangAkunTypeEnum)
+				lastSaldoAkun, err := r.outport.FindLastSaldoAkun(ctx, arisanObj.ID.String(), pesertaObj.ID.String(), vo.PiutangAkunTypeEnum.String())
 				if err != nil {
 					return err
 				}
@@ -254,7 +254,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 					return err
 				}
 
-				_, err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
+				err = r.outport.SaveSaldoAkun(ctx, saldoAkunModalObj)
 				if err != nil {
 					return err
 				}
@@ -280,12 +280,12 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 				return err
 			}
 
-			_, err = r.outport.SaveUndian(ctx, undianObj)
+			err = r.outport.SaveUndian(ctx, undianObj)
 			if err != nil {
 				return err
 			}
 
-			slots, err := r.outport.FindAllSlot(ctx, arisanObj.ID)
+			slots, err := r.outport.FindAllSlot(ctx, arisanObj.ID.String())
 			if err != nil {
 				return err
 			}
@@ -306,7 +306,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 					return err
 				}
 
-				_, err = r.outport.SaveTagihan(ctx, tagihanObj)
+				err = r.outport.SaveTagihan(ctx, tagihanObj)
 				if err != nil {
 					return err
 				}
@@ -319,7 +319,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 		{
 			for _, slot := range slotsObj {
 
-				pesertaObj, err := r.outport.FindOnePeserta(ctx, slot.PesertaID)
+				pesertaObj, err := r.outport.FindOnePeserta(ctx, slot.PesertaID.String())
 				if err != nil {
 					return err
 				}
@@ -330,7 +330,7 @@ func (r *kocokUndianInteractor) Execute(ctx context.Context, req port.KocokUndia
 
 				pesertaObj.ResetPeserta()
 
-				_, err = r.outport.SavePeserta(ctx, pesertaObj)
+				err = r.outport.SavePeserta(ctx, pesertaObj)
 				if err != nil {
 					return err
 				}

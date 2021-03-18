@@ -29,7 +29,7 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 
 	err = service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, req.PesertaID)
 		if err != nil {
 			return err
 		}
@@ -56,12 +56,12 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 
 		pesertaObj.JadiAdmin(arisanObj.ID)
 
-		_, err = r.outport.SavePeserta(ctx, pesertaObj)
+		err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {
 			return err
 		}
 
-		_, err = r.outport.SaveArisan(ctx, arisanObj)
+		err = r.outport.SaveArisan(ctx, arisanObj)
 		if err != nil {
 			return err
 		}
@@ -76,7 +76,7 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 			return err
 		}
 
-		_, err = r.outport.SaveSlot(ctx, slotObj)
+		err = r.outport.SaveSlot(ctx, slotObj)
 		if err != nil {
 			return err
 		}
@@ -93,7 +93,7 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 			return err
 		}
 
-		_, err = r.outport.SaveUndian(ctx, undianObj)
+		err = r.outport.SaveUndian(ctx, undianObj)
 		if err != nil {
 			return err
 		}

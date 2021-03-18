@@ -39,6 +39,10 @@ func (r UndanganState) GetDetail() UndanganStateDetail {
 	return enumUndanganState[r]
 }
 
+func (r UndanganState) String() string {
+	return string(r)
+}
+
 func (r UndanganState) PossibleValues() []UndanganState {
 	res := []UndanganState{}
 	for key, _ := range enumUndanganState {

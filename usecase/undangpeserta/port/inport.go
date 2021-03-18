@@ -1,18 +1,18 @@
 package port
 
 import (
-	"context"
+  "context"
 )
 
 // UndangPesertaInport ...
 type UndangPesertaInport interface {
-	Execute(ctx context.Context, req UndangPesertaRequest) (*UndangPesertaResponse, error)
+  Execute(ctx context.Context, req UndangPesertaRequest) (*UndangPesertaResponse, error)
 }
 
 // UndangPesertaRequest ...
 type UndangPesertaRequest struct {
-	AdminID               string
-	PesertaYangDiundangID string
+  AdminID    string
+  PesertaIDs []string
 }
 
 // UndangPesertaResponse ...

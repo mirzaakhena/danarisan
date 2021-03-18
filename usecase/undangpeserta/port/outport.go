@@ -8,8 +8,9 @@ import (
 // UndangPesertaOutport ...
 type UndangPesertaOutport interface {
 	repository.FindOneArisanRepo
-	repository.FindOnePesertaRepo
 	repository.FindOneArisanByAdminIDRepo
 	repository.SavePesertaRepo
+	repository.SaveListOfPesertaRepo
+	repository.FindPesertaByIDsRepo
 	service.TransactionDB
 }

@@ -37,6 +37,10 @@ func (r ArisanStatus) GetDetail() ArisanStatusDetail {
 	return enumArisanStatus[r]
 }
 
+func (r ArisanStatus) String() string {
+	return string(r)
+}
+
 func (r ArisanStatus) PossibleValues() []ArisanStatus {
 	res := []ArisanStatus{}
 	for key, _ := range enumArisanStatus {

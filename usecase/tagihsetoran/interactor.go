@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/service"
-	"github.com/mirzaakhena/danarisan/domain/vo"
 	"github.com/mirzaakhena/danarisan/usecase/tagihsetoran/port"
 )
 
@@ -28,7 +27,7 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		arisanObj, err := r.outport.FindOneArisan(ctx, vo.ArisanID(req.ArisanID))
+		arisanObj, err := r.outport.FindOneArisan(ctx, req.ArisanID)
 		if err != nil {
 			return err
 		}
@@ -37,7 +36,7 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 			return apperror.ArisanTidakDitemukan
 		}
 
-		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID, arisanObj.PutaranKe)
+		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID.String(), arisanObj.PutaranKe)
 		if err != nil {
 			return err
 		}
@@ -46,7 +45,7 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 			return apperror.UndianTidakDitemukan
 		}
 
-		tagihanObjs, err := r.outport.FindAllTagihan(ctx, undianObj.ID)
+		tagihanObjs, err := r.outport.FindAllTagihan(ctx, undianObj.ID.String())
 		if err != nil {
 			return err
 		}
@@ -74,12 +73,12 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 				return err
 			}
 
-			_, err = r.outport.SaveTagihan(ctx, &tagihanObj)
+			err = r.outport.SaveTagihan(ctx, tagihanObj)
 			if err != nil {
 				return err
 			}
 
-			_, err = r.outport.NotifyPeserta(ctx, port.NotifyPesertaRequest{PesertaID: string(tagihanObj.PesertaID)})
+			_, err = r.outport.NotifyPeserta(ctx, port.NotifyPesertaRequest{PesertaID: tagihanObj.PesertaID.String()})
 			if err != nil {
 				return err
 			}

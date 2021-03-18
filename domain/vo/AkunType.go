@@ -51,6 +51,10 @@ func (r AkunType) GetDetail() AkunTypeDetail {
 	return enumAkunType[r]
 }
 
+func (r AkunType) String() string {
+	return string(r)
+}
+
 func (r AkunType) PossibleValues() []AkunType {
 	res := []AkunType{}
 	for key, _ := range enumAkunType {

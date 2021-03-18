@@ -12,3 +12,7 @@ func NewArisanID(req ArisanIDRequest) (ArisanID, error) {
 	obj := ArisanID(req.GenerateID.Generate())
 	return obj, nil
 }
+
+func (r ArisanID) String() string {
+	return string(r)
+}

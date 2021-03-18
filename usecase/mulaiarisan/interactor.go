@@ -5,8 +5,6 @@ import (
 	"github.com/mirzaakhena/danarisan/application/apperror"
 	"github.com/mirzaakhena/danarisan/domain/entity"
 	"github.com/mirzaakhena/danarisan/domain/service"
-	"github.com/mirzaakhena/danarisan/domain/vo"
-
 	"github.com/mirzaakhena/danarisan/usecase/mulaiarisan/port"
 )
 
@@ -30,7 +28,7 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 
 	err := service.WithTransaction(ctx, r.outport, func(ctx context.Context) error {
 
-		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.AdminID))
+		pesertaObj, err := r.outport.FindOnePeserta(ctx, req.AdminID)
 		if err != nil {
 			return err
 		}
@@ -39,7 +37,7 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 			return apperror.PesertaBukanAdmin
 		}
 
-		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
+		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID.String())
 		if err != nil {
 			return err
 		}
@@ -53,12 +51,12 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 			return err
 		}
 
-		_, err = r.outport.SaveArisan(ctx, arisanObj)
+		err = r.outport.SaveArisan(ctx, arisanObj)
 		if err != nil {
 			return err
 		}
 
-		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID, arisanObj.PutaranKe)
+		undianObj, err := r.outport.FindOneUndian(ctx, arisanObj.ID.String(), arisanObj.PutaranKe)
 		if err != nil {
 			return err
 		}
@@ -67,7 +65,7 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 			return apperror.UndianTidakDitemukan
 		}
 
-		slots, err := r.outport.FindAllSlot(ctx, arisanObj.ID)
+		slots, err := r.outport.FindAllSlot(ctx, arisanObj.ID.String())
 		if err != nil {
 			return err
 		}
@@ -84,7 +82,7 @@ func (r *mulaiArisanInteractor) Execute(ctx context.Context, req port.MulaiArisa
 				return err
 			}
 
-			_, err = r.outport.SaveTagihan(ctx, tagihanObj)
+			err = r.outport.SaveTagihan(ctx, tagihanObj)
 			if err != nil {
 				return err
 			}
