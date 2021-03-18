@@ -1,4 +1,4 @@
-package restapi
+package danamock
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,17 +8,17 @@ import (
 	"github.com/mirzaakhena/danarisan/controller"
 	"github.com/mirzaakhena/danarisan/infrastructure/log"
 	"github.com/mirzaakhena/danarisan/infrastructure/util"
-	"github.com/mirzaakhena/danarisan/usecase/bayarsetoran/port"
+	"github.com/mirzaakhena/danarisan/usecase/topup/port"
 )
 
 // TopupHandler ...
-func TopupHandler(inputPort port.BayarSetoranInport) gin.HandlerFunc {
+func TopupHandler(inputPort port.TopupInport) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
 		ctx := log.ContextWithOperationID(c.Request.Context())
 
-		var req port.BayarSetoranRequest
+		var req port.TopupRequest
 		if err := c.BindJSON(&req); err != nil {
 			log.ErrorResponse(ctx, err)
 			c.JSON(http.StatusBadRequest, err.Error())

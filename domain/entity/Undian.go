@@ -8,7 +8,7 @@ import (
 type Undian struct {
 	BaseModel
 	ID             vo.UndianID `gorm:"primaryKey"` //
-	ArisanID       vo.ArisanID `json:"-"`//
+	ArisanID       vo.ArisanID `json:"-"`          //
 	PutaranKe      int         //
 	TanggalTagihan time.Time   //
 	TanggalUndian  time.Time   //

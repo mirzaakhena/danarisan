@@ -56,27 +56,25 @@ func (r *tagihSetoranInteractor) Execute(ctx context.Context, req port.TagihSeto
 			totalTagihan := tagihanObj.Nominal + undianObj.BiayaArisan + (undianObj.BiayaAdmin * float64(tagihanObj.JumlahSlot))
 
 			createPaymentReq := port.CreatePaymentRequest{
-				ArisanID:           req.ArisanID,
+				PesertaID:          string(tagihanObj.PesertaID),
 				TagihanID:          string(tagihanObj.ID),
 				Nominal:            totalTagihan,
 				TanggalKadaluwarsa: undianObj.TanggalUndian,
-				Tagihan:            tagihanObj,
 			}
 
+			// SYNC CALL
 			createPaymentRes, err := r.outport.CreatePayment(ctx, createPaymentReq)
 			if err != nil {
 				// TODO jika gagal ada harus mekanisme retry disini
 				return err
 			}
 
-			tagihanObj2 := createPaymentReq.Tagihan
-
-			err = tagihanObj2.SimpanPenagihan(createPaymentRes.AcquirementID, createPaymentRes.CheckoutURL)
+			err = tagihanObj.SimpanPenagihan(createPaymentRes.AcquirementID, createPaymentRes.CheckoutURL)
 			if err != nil {
 				return err
 			}
 
-			_, err = r.outport.SaveTagihan(ctx, &tagihanObj2)
+			_, err = r.outport.SaveTagihan(ctx, &tagihanObj)
 			if err != nil {
 				return err
 			}

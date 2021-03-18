@@ -18,4 +18,5 @@ const (
 	UndianTidakDitemukan           ErrorType = "ER1000 undian tidak ditemukan"
 	PesertaSudahMenjadiAdmin       ErrorType = "ER1000 peserta sudah menjadi admin"
 	PesertaBukanAdmin              ErrorType = "ER1000 peserta bukan admin"
+	BalanceUnderZeroError          ErrorType = "ER1000 balance under zero error"
 )

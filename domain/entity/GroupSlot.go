@@ -9,7 +9,7 @@ import (
 type GroupSlot struct {
 	BaseModel
 	ID            vo.GroupSlotID `gorm:"primaryKey"` //
-	ArisanID      vo.ArisanID    `json:"-"`//
+	ArisanID      vo.ArisanID    `json:"-"`          //
 	TanggalMenang *time.Time     //
 }
 

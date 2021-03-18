@@ -8,9 +8,9 @@ type Peserta struct {
 	BaseModel
 	ID            vo.PesertaID     `gorm:"primaryKey"` //
 	Nama          string           //
-	Membayar      int              `json:"-"`//
-	TidakMembayar int              `json:"-"`//
-	ArisanID      vo.ArisanID      `json:"-"`//
+	Membayar      int              `json:"-"` //
+	TidakMembayar int              `json:"-"` //
+	ArisanID      vo.ArisanID      `json:"-"` //
 	StateUndangan vo.UndanganState //
 	IsAdmin       bool             //
 }

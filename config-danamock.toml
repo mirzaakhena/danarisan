@@ -5,6 +5,3 @@ port = "8081"
 path = "."
 name = "danamock"
 age = 14
-
-[database]
-connectionstring = "dana.db"

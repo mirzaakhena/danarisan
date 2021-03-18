@@ -16,7 +16,7 @@ func main() {
 		application.Run(registry.NewArisanSystemRegistry())
 
 	case "danamock":
-	  application.Run(registry.NewDANAMockRegistry())
+		application.Run(registry.NewDANAMockRegistry())
 
 	default:
 		fmt.Printf("Try\ngo run main.go danarisan\nor\ngo run main.go danamock")
