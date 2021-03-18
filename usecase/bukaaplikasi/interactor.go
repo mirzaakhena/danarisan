@@ -27,7 +27,7 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 
 	res := &port.BukaAplikasiResponse{}
 
-	data, err := service.ReadOnly(ctx, r.outport, func(ctx context.Context) (interface{}, error) {
+	_, err := service.ReadOnly(ctx, r.outport, func(ctx context.Context) (interface{}, error) {
 
 		pesertaObj, err := r.outport.FindOnePeserta(ctx, vo.PesertaID(req.PesertaID))
 		if err != nil {
@@ -38,15 +38,15 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 			return nil, apperror.PesertaTidakDitemukan
 		}
 
-		if pesertaObj.StateUndangan == vo.TolakUndanganStateEnum {
-
-			// peserta tidak join arisan dan bisa bikin arisan sendiri
-			return nil, nil
-		}
+		res.User = pesertaObj
 
 		arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
 		if err != nil {
-			return nil, err
+			return nil, nil
+		}
+
+		if arisanObj == nil {
+			return nil, nil
 		}
 
 		listPeserta, err := r.outport.FindAllPeserta(ctx, arisanObj.ID)
@@ -91,56 +91,13 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 
 		arisanObj.ListSaldoAkun = listSaldoAkun
 
-		//if pesertaObj.StateUndangan == vo.DitawarkanUndanganStateEnum {
-		//	arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
-		//	if err != nil {
-		//		return nil, err
-		//	}
-		//
-		//	if arisanObj == nil {
-		//		return nil, apperror.ArisanTidakDitemukan
-		//	}
-		//
-		//	// peserta belum join arisan dan arisan belum dimulai
-		//	// TODO return list of all peserta with their status and arisanID and state
-		//	return nil, nil
-		//}
-		//
-		//if pesertaObj.StateUndangan == vo.TerimaUndanganStateEnum {
-		//	arisanObj, err := r.outport.FindOneArisan(ctx, pesertaObj.ArisanID)
-		//	if err != nil {
-		//		return nil, err
-		//	}
-		//
-		//	if arisanObj == nil {
-		//		return nil, apperror.ArisanTidakDitemukan
-		//	}
-		//
-		//	if arisanObj.SudahSelesai() {
-		//
-		//		// arisan sudah selesai
-		//		return nil, apperror.ArisanSudahSelesai
-		//	}
-		//
-		//	if arisanObj.MasihTerimaPeserta() {
-		//
-		//		// peserta join arisan tapi arisan belum dimulai
-		//		// TODO return list of all peserta with their status and arisanID and state
-		//		return nil, nil
-		//	}
-		//
-		//	// peserta join arisan dan arisan sudah dimulai
-		//	// TODO return list of all peserta with their status and arisanID and state
-		//	return nil, nil
-		//}
+		res.Data = arisanObj
 
 		return arisanObj, nil
 	})
 	if err != nil {
 		return nil, err
 	}
-
-	res.Data = data
 
 	return res, nil
 }
