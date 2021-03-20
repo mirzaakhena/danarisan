@@ -28,40 +28,33 @@ type TransactionImpl struct {
 }
 
 func (r *TransactionImpl) BeginTransaction(ctx context.Context) (context.Context, error) {
-	log.InfoRequest(ctx, "Begin")
+	log.Info(ctx, "Begin")
 
 	dbTrx := r.db.Begin()
 
 	trxCtx := context.WithValue(ctx, ContextDBValue, dbTrx)
 
-	log.InfoResponse(ctx, "Begin")
 	return trxCtx, nil
 }
 
 func (r *TransactionImpl) CommitTransaction(ctx context.Context) error {
-	log.InfoRequest(ctx, "Commit")
+	log.Info(ctx, "Commit")
 
 	db, err := extractDB(ctx)
 	if err != nil {
 		return err
 	}
 
-	db.Commit()
-
-	log.InfoResponse(ctx, "Commit")
-	return nil
+	return db.Commit().Error
 }
 
 func (r *TransactionImpl) RollbackTransaction(ctx context.Context) error {
-	log.InfoRequest(ctx, "Rollback")
+	log.Info(ctx, "Rollback")
 
 	db, err := extractDB(ctx)
 	if err != nil {
 		return err
 	}
 
-	db.Rollback()
-
-	log.InfoResponse(ctx, "Rollback")
-	return err
+	return db.Rollback().Error
 }
