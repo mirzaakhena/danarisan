@@ -54,12 +54,12 @@ func getOperationID(ctx context.Context) string {
 
 	operationIDInterface := ctx.Value(operationIDField)
 	if operationIDInterface == nil {
-		return "-"
+		return "000000000000000000000000000"
 	}
 
 	operationID, ok := operationIDInterface.(string)
 	if !ok {
-		return "-"
+		return "000000000000000000000000000"
 	}
 
 	return operationID
