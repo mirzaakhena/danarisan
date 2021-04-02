@@ -54,14 +54,14 @@ func (r *buatArisanInteractor) Execute(ctx context.Context, req port.BuatArisanR
 
 		arisanObj.TambahPeserta()
 
-		pesertaObj.JadiAdmin(arisanObj.ID)
-
-		err = r.outport.SavePeserta(ctx, pesertaObj)
+		err = r.outport.SaveArisan(ctx, arisanObj)
 		if err != nil {
 			return err
 		}
 
-		err = r.outport.SaveArisan(ctx, arisanObj)
+		pesertaObj.JadiAdmin(arisanObj.ID)
+
+		err = r.outport.SavePeserta(ctx, pesertaObj)
 		if err != nil {
 			return err
 		}

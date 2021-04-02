@@ -1,21 +1,21 @@
 package port
 
 import (
-  "context"
+	"context"
 )
 
 // BukaAplikasiInport ...
 type BukaAplikasiInport interface {
-  Execute(ctx context.Context, req BukaAplikasiRequest) (*BukaAplikasiResponse, error)
+	Execute(ctx context.Context, req BukaAplikasiRequest) (*BukaAplikasiResponse, error)
 }
 
 // BukaAplikasiRequest ...
 type BukaAplikasiRequest struct {
-  PesertaID string
+	PesertaID string
 }
 
 // BukaAplikasiResponse ...
 type BukaAplikasiResponse struct {
-  Arisan interface{}
-  User   interface{}
+	Arisan interface{}
+	User   interface{}
 }

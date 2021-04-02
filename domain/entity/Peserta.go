@@ -13,6 +13,7 @@ type Peserta struct {
   ArisanID      vo.ArisanID      ``                  //
   StateUndangan vo.UndanganState ``                  //
   IsAdmin       bool             ``                  //
+  Aktif         bool             ``                  //
 }
 
 type PesertaRequest struct {
@@ -64,4 +65,8 @@ func (r *Peserta) ResetPeserta() {
   r.IsAdmin = false
   r.StateUndangan = vo.NganggurUndanganStateEnum
   r.ArisanID = ""
+}
+
+func (r *Peserta) Aktivasi() {
+  r.Aktif = true
 }

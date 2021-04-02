@@ -101,3 +101,7 @@ type FindAllSaldoAkunRepo interface {
 type FindAllJurnalRepo interface {
 	FindAllJurnal(ctx context.Context, arisanID string) ([]*entity.Jurnal, error)
 }
+
+type FindOnePeserta2Repo interface {
+	FindOnePeserta2(ctx context.Context, pesertaID string) (*entity.Peserta, error)
+}

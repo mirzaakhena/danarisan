@@ -25,7 +25,7 @@ func (r *bukaAplikasiInteractor) Execute(ctx context.Context, req port.BukaAplik
 
 	res := &port.BukaAplikasiResponse{}
 
-	err := service.ReadOnly(ctx, r.outport, func(ctx context.Context) (error) {
+	err := service.ReadOnly(ctx, r.outport, func(ctx context.Context) error {
 
 		pesertaObj, err := r.outport.FindOnePeserta(ctx, req.PesertaID)
 		if err != nil {
