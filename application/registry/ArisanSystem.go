@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"github.com/mirzaakhena/danarisan/infrastructure/config"
 	"github.com/mirzaakhena/danarisan/infrastructure/log"
-	"github.com/mirzaakhena/danarisan/usecase/bayarsetoran"
 	"github.com/mirzaakhena/danarisan/usecase/buatarisan"
 	"github.com/mirzaakhena/danarisan/usecase/bukaaplikasi"
-	"github.com/mirzaakhena/danarisan/usecase/jawabundangan"
 	"github.com/mirzaakhena/danarisan/usecase/kocokundian"
 	"github.com/mirzaakhena/danarisan/usecase/mulaiarisan"
 	"github.com/mirzaakhena/danarisan/usecase/registerpeserta"
@@ -59,10 +57,10 @@ func (r *arisanSystemRegistry) RegisterUsecase() {
 
 	gw := prod.NewSuperGateway(db)
 
-	r.bayarSetoranHandler(gw)
+	//r.bayarSetoranHandler(gw)
 	r.buatArisanHandler(gw)
 	r.bukaAplikasiHandler(gw)
-	r.jawabUndanganHandler(gw)
+	//r.jawabUndanganHandler(gw)
 	r.kocokUndianHandler(gw)
 	r.mulaiArisanHandler(gw)
 	r.registerPesertaHandler(gw)
@@ -76,20 +74,20 @@ func (r *arisanSystemRegistry) bukaAplikasiHandler(gw *prod.SuperGateway) {
 	r.Router.GET("/arisan/:pesertaID", controller.Authorized(), restapi.BukaAplikasiHandler(inport))
 }
 
-func (r *arisanSystemRegistry) bayarSetoranHandler(gw *prod.SuperGateway) {
-	inport := bayarsetoran.NewUsecase(gw)
-	r.Router.POST("/bayarsetoran", controller.Authorized(), restapi.BayarSetoranHandler(inport))
-}
+//func (r *arisanSystemRegistry) bayarSetoranHandler(gw *prod.SuperGateway) {
+//	inport := bayarsetoran.NewUsecase(gw)
+//	r.Router.POST("/bayarsetoran", controller.Authorized(), restapi.BayarSetoranHandler(inport))
+//}
 
 func (r *arisanSystemRegistry) buatArisanHandler(gw *prod.SuperGateway) {
 	inport := buatarisan.NewUsecase(gw)
 	r.Router.POST("/buatarisan", controller.Authorized(), restapi.BuatArisanHandler(inport))
 }
 
-func (r *arisanSystemRegistry) jawabUndanganHandler(gw *prod.SuperGateway) {
-	inport := jawabundangan.NewUsecase(gw)
-	r.Router.POST("/jawabundangan", controller.Authorized(), restapi.JawabUndanganHandler(inport))
-}
+//func (r *arisanSystemRegistry) jawabUndanganHandler(gw *prod.SuperGateway) {
+//	inport := jawabundangan.NewUsecase(gw)
+//	r.Router.POST("/jawabundangan", controller.Authorized(), restapi.JawabUndanganHandler(inport))
+//}
 
 func (r *arisanSystemRegistry) kocokUndianHandler(gw *prod.SuperGateway) {
 	inport := kocokundian.NewUsecase(gw)

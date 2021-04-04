@@ -5,18 +5,18 @@ import (
 	"github.com/mirzaakhena/danarisan/controller"
 	"github.com/mirzaakhena/danarisan/infrastructure/log"
 	"github.com/mirzaakhena/danarisan/infrastructure/util"
-	"github.com/mirzaakhena/danarisan/usecase/jawabundangan/port"
+	"github.com/mirzaakhena/danarisan/usecase/jawabundangan2"
 	"net/http"
 )
 
 // JawabUndanganHandler ...
-func JawabUndanganHandler(inputPort port.JawabUndanganInport) gin.HandlerFunc {
+func JawabUndanganHandler(inputPort jawabundangan2.Inport) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
 		ctx := log.ContextWithOperationID(c.Request.Context())
 
-		var req port.JawabUndanganRequest
+		var req jawabundangan2.InportRequest
 		if err := c.BindJSON(&req); err != nil {
 			log.ErrorResponse(ctx, err)
 			c.JSON(http.StatusBadRequest, err.Error())

@@ -1,43 +1,42 @@
 package restapi
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
-	"time"
-
-	"github.com/mirzaakhena/danarisan/controller"
-	"github.com/mirzaakhena/danarisan/infrastructure/log"
-	"github.com/mirzaakhena/danarisan/infrastructure/util"
-	"github.com/mirzaakhena/danarisan/usecase/bayarsetoran/port"
+  "github.com/gin-gonic/gin"
+  "github.com/mirzaakhena/danarisan/controller"
+  "github.com/mirzaakhena/danarisan/infrastructure/log"
+  "github.com/mirzaakhena/danarisan/infrastructure/util"
+  "github.com/mirzaakhena/danarisan/usecase/bayarsetoran2"
+  "net/http"
+  "time"
 )
 
 // BayarSetoranHandler ...
-func BayarSetoranHandler(inputPort port.BayarSetoranInport) gin.HandlerFunc {
+func BayarSetoranHandler(inputPort bayarsetoran2.Inport) gin.HandlerFunc {
 
-	return func(c *gin.Context) {
+  return func(c *gin.Context) {
 
-		ctx := log.ContextWithOperationID(c.Request.Context())
+    ctx := log.ContextWithOperationID(c.Request.Context())
 
-		var req port.BayarSetoranRequest
-		if err := c.BindJSON(&req); err != nil {
-			log.ErrorResponse(ctx, err)
-			c.JSON(http.StatusBadRequest, err.Error())
-			return
-		}
+    var req bayarsetoran2.InportRequest
+    if err := c.BindJSON(&req); err != nil {
+      log.ErrorResponse(ctx, err)
+      c.JSON(http.StatusBadRequest, err.Error())
+      return
+    }
 
-		req.TanggalHariIni = time.Now()
+    req.TanggalHariIni = time.Now()
 
-		log.InfoRequest(ctx, util.MustJSON(req))
+    log.InfoRequest(ctx, util.MustJSON(req))
 
-		res, err := inputPort.Execute(ctx, req)
+    res, err := inputPort.Execute(ctx, req)
 
-		if err != nil {
-			log.ErrorResponse(ctx, err)
-			c.JSON(http.StatusBadRequest, controller.NewErrorResponse(err))
-			return
-		}
+    if err != nil {
+      log.ErrorResponse(ctx, err)
+      c.JSON(http.StatusBadRequest, controller.NewErrorResponse(err))
+      return
+    }
 
-		log.InfoResponse(ctx, util.MustJSON(res))
-		c.JSON(http.StatusOK, res)
-	}
+    log.InfoResponse(ctx, util.MustJSON(res))
+    c.JSON(http.StatusOK, res)
+  }
 }

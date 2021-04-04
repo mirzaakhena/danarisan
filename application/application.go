@@ -11,3 +11,15 @@ func Run(rv RegistryContract) {
 		rv.RunApplication()
 	}
 }
+
+type RegistryContract2 interface {
+	Register()
+}
+
+type Runner interface {
+	Start()
+}
+
+func RunApp(r Runner) {
+	r.Start()
+}
